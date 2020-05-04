@@ -21,20 +21,21 @@ public class AboutPage {
 	
 	private void getInfo(Scanner input){
 		version = input.nextLine();
-		for(int i = 0; i < 4; i++) {
-			developers[i] = input.nextLine();
+		int index = 0;
+		while(input.hasNextLine()) {
+			developers[index] = input.nextLine();
+			index++;
 		}
 	}
 	
 	public void makePage() {
 		var frame = new JFrame();		
 		frame.setLayout(new BorderLayout());
-		JLabel versionText = new JLabel("Version: " + version);
-		JLabel devs = new JLabel("<html>Developers:<br>" +
-				developers[0] + "<br>" +
-				developers[1] + "<br>" +
- 				developers[2] + "<br>" +
-				developers[3]);
+		JLabel versionText = new JLabel(version);
+		JLabel devs = new JLabel("<html>Developers:<br>");
+		for(String s: developers) {	
+			devs.setText(devs.getText() + s + "<br>");
+		}
 		JPanel panel1 = new JPanel();
 		JPanel panel2 = new JPanel();
 		JPanel panel3 = new JPanel();

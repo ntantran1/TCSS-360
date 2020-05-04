@@ -1,4 +1,4 @@
-0.1
+Version: 0.1
 Kevin Nguyen
 Nhan Tran
 Rabin Gora
