@@ -1,3 +1,7 @@
+/**
+ * TCSS 360 project
+ * Team Lions
+ */
 package pages;
 import java.io.IOException;
 
