@@ -1,3 +1,8 @@
+/*
+ * Tcss 360 project 
+ * Spring 2020
+ * Team Lions
+ */
 package info;
 
 import java.awt.*;

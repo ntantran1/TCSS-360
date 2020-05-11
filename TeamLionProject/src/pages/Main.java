@@ -1,4 +1,4 @@
-/**
+/*
  * TCSS 360 project
  * Team Lions
  */
