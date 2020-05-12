@@ -15,11 +15,11 @@ import javax.swing.*;
 public class AboutPage {
 	String[] developers;
 	String version;
-	String file;
+//	String file;
 	
 	public AboutPage() throws IOException {
-		file = "files/";
-		Scanner input = new Scanner(Paths.get(file + "ProjectInfo.txt"));
+//		file = "files/";
+		Scanner input = new Scanner(Paths.get("ProjectInfo.txt"));
 		developers = new String[4];
 		getInfo(input);
 	}
