@@ -15,11 +15,9 @@ import javax.swing.*;
 public class AboutPage {
 	String[] developers;
 	String version;
-//	String file;
 	
 	public AboutPage() throws IOException {
-//		file = "files/";
-		Scanner input = new Scanner(Paths.get("ProjectInfo.txt"));
+		Scanner input = new Scanner(Paths.get("files/" + "ProjectInfo.txt"));
 		developers = new String[4];
 		getInfo(input);
 	}
