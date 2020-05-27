@@ -97,76 +97,43 @@ public class HomePage {
 	        	         }
 	        	                
 	        	     });
-	           
-	            	 
 	            	 first.addActionListener(new ActionListener() {
-
 	                     @Override
 	                     public void actionPerformed(final ActionEvent theE) {
-	                    	 
 	                    	 firstName = first.getText();
 	                    	 first.setEditable(false);
-	                    	 
 	                     }
 	            	 });
-	            	 
 	            	 emailText.addActionListener(new ActionListener() {
-
 	                     @Override
 	                     public void actionPerformed(final ActionEvent theE) {
-	                    	 
 	                    	 email = emailText.getText();
 	                    	 emailText.setEditable(false);
-	                    	 
-	                    	 
 	                     }
 	            	 });
-	            	 
 	            	 changeFirst.addActionListener(new ActionListener() {
-
 	            		 @Override
 	        	         public void actionPerformed(final ActionEvent theE) {
 	            			 //
 	            			 first.setEditable(true);
-	            			 
 	        	         }
-	        	                
 	        	     });
-	            	 
 	            	 changeEmail.addActionListener(new ActionListener() {
-
 	            		 @Override
 	        	         public void actionPerformed(final ActionEvent theE) {
-	            			 
 	    	            	 emailText.setVisible(true);
 	            			 emailText.setEditable(true);
-	            			 
 	        	         }
-	        	                
 	        	     });
 	            	
 	            	 JFrame f = new JFrame("Profile Info");
-	            	 
-	            	 
-	            	
 	            	 
 	            	 f.setSize(500, 500);
 	            	 f.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 	         		 f.getContentPane().add(p);		
 	                 f.setVisible(true);
-	            	 
-	                
-	            }
-	                
-	        });
-
-	        
-
-	        
-	        
-	} 
-
-
-
-}
  
+	            }
+	        });     
+	} 
+}
