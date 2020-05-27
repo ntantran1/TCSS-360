@@ -24,6 +24,7 @@ public class HomePage {
 		frame.getContentPane().add(panel);		
         frame.setVisible(true);
         addListener();
+        //
 	}
 	
 	 public void addListener() { 
