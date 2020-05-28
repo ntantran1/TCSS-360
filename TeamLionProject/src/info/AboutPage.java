@@ -53,7 +53,7 @@ public class AboutPage {
 		frame.getContentPane().add(panel3, BorderLayout.SOUTH);
 		frame.setVisible(true);
 		frame.setSize(400, 300);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setResizable(false);
 		frame.setTitle("About Page");
 	}
