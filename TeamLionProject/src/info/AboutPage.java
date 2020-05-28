@@ -6,6 +6,7 @@
 package info;
 
 import java.awt.*;
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.Scanner;
@@ -17,10 +18,10 @@ public class AboutPage {
 	String version;
 	
 	public AboutPage() throws IOException {
-		Scanner input = new Scanner("ProjectInfo.txt");  //
-		developers = new String[4];
+		File file = new File("projectInfo.txt");
+		Scanner input = new Scanner(file);  //
+		developers = new String[5];
 		getInfo(input);
-		
 	}
 	
 	private void getInfo(Scanner input){
