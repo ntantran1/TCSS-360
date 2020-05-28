@@ -15,9 +15,11 @@ import javax.swing.*;
 public class AboutPage {
 	String[] developers;
 	String version;
+	String file;
 	
 	public AboutPage() throws IOException {
-		Scanner input = new Scanner("ProjectInfo.txt");  //
+		file = "files/";
+		Scanner input = new Scanner(Paths.get(file + "ProjectInfo.txt"));
 		developers = new String[4];
 		getInfo(input);
 	}
@@ -53,7 +55,7 @@ public class AboutPage {
 		frame.getContentPane().add(panel3, BorderLayout.SOUTH);
 		frame.setVisible(true);
 		frame.setSize(400, 300);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.setResizable(false);
 		frame.setTitle("About Page");
 	}

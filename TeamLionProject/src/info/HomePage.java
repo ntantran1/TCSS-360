@@ -1,11 +1,16 @@
 package info;
 
+import java.awt.BorderLayout;
+
 //Testing for the boys
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
+import java.io.File;
 import java.io.IOException;
+import java.nio.file.*;
+import java.util.List;
+import java.util.Scanner;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -18,122 +23,41 @@ import javax.swing.JTextField;
 public class HomePage {
 	
 	private static final JFrame frame = new JFrame("Home Page");
-	
 	private AboutPage about;
-	
-	private String email = "ntantra@uw.edu";
-	
-	private String firstName = "Nhan";
-	
+	private ProfilePage profile;
 	JButton editProf = new JButton("Edit Profile");
-	
 	JButton aboutButton = new JButton("About Info");
-	
-	JPanel panel = new JPanel();
+	JPanel panelNorth = new JPanel();
+	JPanel panelSouth = new JPanel();
 	
 	public HomePage() throws IOException{
 		about = new AboutPage();
-		panel.add(aboutButton);
-		panel.add(editProf);
-		frame.setSize(1000, 1000);
+		profile = new ProfilePage();
+		var frame = new JFrame();
+		frame.setLayout(new BorderLayout());
+		panelSouth.add(aboutButton);
+		panelNorth.add(editProf);
+		frame.getContentPane().add(panelSouth, BorderLayout.SOUTH);
+		frame.getContentPane().add(panelNorth, BorderLayout.NORTH);
+		frame.setSize(1000, 500);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		frame.getContentPane().add(panel);		
         frame.setVisible(true);
         addListener();
-        
 	}
 	
 	 public void addListener() { 
 	        aboutButton.addActionListener(new ActionListener() {
-
 	            @Override
 	            public void actionPerformed(final ActionEvent theE) {
 	                about.makePage();
 	            }
-	                
 	        });
 	        
 	        editProf.addActionListener(new ActionListener() {
-
 	            @Override
 	            public void actionPerformed(final ActionEvent theE) {
-	            	 JButton changeFirst = new JButton("Change First Name");
-	            	 JButton changeEmail = new JButton("Change Email");
-	            	 
-	            	 JButton getFirst = new JButton("Get First Name");
-	            	 JButton getEmail = new JButton("Get email");
-	            	 
-	            	 JPanel p = new JPanel();
-	            	 
-	            	 JTextField first = new javax.swing.JTextField("first name");
-	            	 JTextField emailText = new javax.swing.JTextField("email");
-	            	 
-
-	            	 p.add(first);
-	            	 p.add(emailText);
-	            	 
-	            	 p.add(getFirst);
-	            	 p.add(getEmail);
-	            	 
-	            	 first.setEditable(false);
-	            	 emailText.setEditable(false);
-	            	 
-	            	 p.add(changeEmail);
-	            	 p.add(changeFirst);
-	            	 getFirst.addActionListener(new ActionListener() {
-
-	            		 @Override
-	        	         public void actionPerformed(final ActionEvent theE) {
-	            			 JOptionPane.showMessageDialog( null, firstName);
-	        	         }
-	        	                
-	        	     });
-	            	 
-	            	 getEmail.addActionListener(new ActionListener() {
-
-	            		 @Override
-	        	         public void actionPerformed(final ActionEvent theE) {
-	            			 JOptionPane.showMessageDialog( null, email);
-	        	         }
-	        	                
-	        	     });
-	            	 first.addActionListener(new ActionListener() {
-	                     @Override
-	                     public void actionPerformed(final ActionEvent theE) {
-	                    	 firstName = first.getText();
-	                    	 first.setEditable(false);
-	                     }
-	            	 });
-	            	 emailText.addActionListener(new ActionListener() {
-	                     @Override
-	                     public void actionPerformed(final ActionEvent theE) {
-	                    	 email = emailText.getText();
-	                    	 emailText.setEditable(false);
-	                     }
-	            	 });
-	            	 changeFirst.addActionListener(new ActionListener() {
-	            		 @Override
-	        	         public void actionPerformed(final ActionEvent theE) {
-	            			 //
-	            			 first.setEditable(true);
-	        	         }
-	        	     });
-	            	 changeEmail.addActionListener(new ActionListener() {
-	            		 @Override
-	        	         public void actionPerformed(final ActionEvent theE) {
-	    	            	 emailText.setVisible(true);
-	            			 emailText.setEditable(true);
-	        	         }
-	        	     });
-	            	
-	            	 JFrame f = new JFrame("Profile Info");
-	            	 
-	            	 f.setSize(500, 500);
-	            	 f.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-	         		 f.getContentPane().add(p);		
-	                 f.setVisible(true);
- 
+	            	profile.makePage();
 	            }
-	        });     
+	        });
 	} 
 }
