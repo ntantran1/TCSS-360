@@ -20,16 +20,20 @@ import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JTextField;
 
+import java.lang.Math;
+import java.io.Serializable;
+import java.io.*;
+
 public class HomePage {
-	
+
 	private static final JFrame frame = new JFrame("Home Page");
 	private AboutPage about;
 	private ProfilePage profile;
-	JButton editProf = new JButton("Edit Profile");
+	JButton editProf = new JButton("View Profile");
 	JButton aboutButton = new JButton("About Info");
 	JPanel panelNorth = new JPanel();
 	JPanel panelSouth = new JPanel();
-	
+
 	public HomePage() throws IOException{
 		about = new AboutPage();
 		profile = new ProfilePage();
@@ -41,23 +45,25 @@ public class HomePage {
 		frame.getContentPane().add(panelNorth, BorderLayout.NORTH);
 		frame.setSize(1000, 500);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        frame.setVisible(true);
-        addListener();
+		frame.setVisible(true);
+		addListener();
 	}
-	
-	 public void addListener() { 
-	        aboutButton.addActionListener(new ActionListener() {
-	            @Override
-	            public void actionPerformed(final ActionEvent theE) {
-	                about.makePage();
-	            }
-	        });
-	        
-	        editProf.addActionListener(new ActionListener() {
-	            @Override
-	            public void actionPerformed(final ActionEvent theE) {
-	            	profile.makePage();
-	            }
-	        });
-	} 
+
+	public void addListener() { 
+		aboutButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(final ActionEvent theE) {
+				about.makePage();
+			}
+		});
+
+		editProf.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(final ActionEvent theE) {
+				profile.makePage();
+			}
+		});
+
+	}
+
 }
