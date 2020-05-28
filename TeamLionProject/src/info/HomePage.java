@@ -36,7 +36,8 @@ public class HomePage {
 		panel.add(aboutButton);
 		panel.add(editProf);
 		frame.setSize(1000, 1000);
-		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.getContentPane().add(panel);		
         frame.setVisible(true);
         addListener();

@@ -20,6 +20,7 @@ public class AboutPage {
 		Scanner input = new Scanner("ProjectInfo.txt");  //
 		developers = new String[4];
 		getInfo(input);
+		
 	}
 	
 	private void getInfo(Scanner input){
