@@ -22,7 +22,7 @@ public class AboutPage {
 		File file = new File("TeamLionProject/files/ProjectInfo.txt");
 		Scanner input = new Scanner(file);
 		developers = new String[4];
-		getInfo(input);
+		getInfo(input);//
 	}
 	
 	private void getInfo(Scanner input){
