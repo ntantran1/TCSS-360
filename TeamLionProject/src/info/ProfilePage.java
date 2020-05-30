@@ -6,17 +6,14 @@ import java.awt.BorderLayout;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
-import java.io.Serializable;
+import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.*;
 import java.util.List;
 import java.util.Scanner;
 
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -24,11 +21,16 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JTextField;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
-public class ProfilePage {
+public class ProfilePage implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7623978707456111660L;
 	private static final JFrame frame = new JFrame();
-	private List<String> settings = Files.readAllLines(Paths.get("TeamLionProject/files/Settings.txt"));
+	private List<String> settings = Files.readAllLines(Paths.get("files/Settings.txt"));
 	private String email;
 	private String firstName;
 	JButton changeData = new JButton("Change personal info");
@@ -114,15 +116,7 @@ public class ProfilePage {
 				firstNameText.setEditable(false);
 				email = emailText.getText();
 				firstName = firstNameText.getText();
-				settings.set(1, firstName);
-				settings.set(3, email);
-				try {
-					Files.write(Paths.get("TeamLionProject/files/Settings.txt"),
-							settings, StandardCharsets.UTF_8);
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+				writeProfile();
 				changeData.setEnabled(true);
 				submitData.setEnabled(false);
 			}
@@ -132,49 +126,35 @@ public class ProfilePage {
 			@Override
 			public void actionPerformed(final ActionEvent theE) {
 				UserProfile myProfile = new UserProfile(firstName, email);
-				myProfile.export();
+				myProfile.exportProfile();
 			}
 		});
-	} 
-	
-	private class UserProfile implements Serializable
-	{
-		private String tagName;
-		private String email;
-		
-		public UserProfile(String tagName, String email)
-		{   
-			this.tagName = tagName;
-			this.email = email;
-		}
-		public String toString()
-		{
-			return tagName + " " + email;
-		}
 
-		public void export ()
-		{
-			ObjectOutputStream oos = null;
-			FileOutputStream fout = null;
-			file = "files/";
-
-			try{ 
-				fout = new FileOutputStream("c:\\profile.ser", true);
-				oos = new ObjectOutputStream(fout);
-				oos.writeObject(this);
-			} catch (Exception ex) {}
-			finally {
-				if(oos != null){
-					try {
-						oos.close();
-					}
-					catch (IOException e)
-					{
-						e.printStackTrace();
-					}
-				}
+		importData.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(final ActionEvent theE) {
+				UserProfile myProfile = new UserProfile();
+				myProfile.importProfile();
+				email = myProfile.email;
+				firstName = myProfile.firstName;
+				writeProfile();
+				firstNameText.setText(firstName);
+				emailText.setText(email);
 			}
+		});
+		
+		
+	} 
+	public void writeProfile() {
+		settings.set(1, firstName);
+		settings.set(3, email);
+		try {
+			Files.write(Paths.get("files/Settings.txt"),
+					settings, StandardCharsets.UTF_8);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-
 	}
+	
 }

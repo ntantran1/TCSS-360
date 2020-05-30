@@ -16,13 +16,11 @@ import javax.swing.*;
 public class AboutPage {
 	String[] developers;
 	String version;
-	String file;
 	
 	public AboutPage() throws IOException {
-		File file = new File("TeamLionProject/files/ProjectInfo.txt");
-		Scanner input = new Scanner(file);
+		Scanner input = new Scanner(Paths.get("files/ProjectInfo.txt"));
 		developers = new String[4];
-		getInfo(input);//
+		getInfo(input);
 	}
 	
 	private void getInfo(Scanner input){
