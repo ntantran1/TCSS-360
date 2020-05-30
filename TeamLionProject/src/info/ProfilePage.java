@@ -28,7 +28,7 @@ import javax.swing.JTextField;
 public class ProfilePage {
 
 	private static final JFrame frame = new JFrame();
-	private List<String> settings = Files.readAllLines(Paths.get("files/Settings.txt"));
+	private List<String> settings = Files.readAllLines(Paths.get("TeamLionProject/files/Settings.txt"));
 	private String email;
 	private String firstName;
 	JButton changeData = new JButton("Change personal info");
@@ -117,7 +117,7 @@ public class ProfilePage {
 				settings.set(1, firstName);
 				settings.set(3, email);
 				try {
-					Files.write(Paths.get("files/Settings.txt"),
+					Files.write(Paths.get("TeamLionProject/files/Settings.txt"),
 							settings, StandardCharsets.UTF_8);
 				} catch (IOException e) {
 					// TODO Auto-generated catch block

@@ -19,8 +19,8 @@ public class AboutPage {
 	String file;
 	
 	public AboutPage() throws IOException {
-		file = "files/";
-		Scanner input = new Scanner(Paths.get(file + "ProjectInfo.txt"));
+		File file = new File("TeamLionProject/files/ProjectInfo.txt");
+		Scanner input = new Scanner(file);
 		developers = new String[4];
 		getInfo(input);
 	}
