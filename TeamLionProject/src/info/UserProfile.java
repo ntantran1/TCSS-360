@@ -23,7 +23,7 @@ public class UserProfile implements Serializable{
 		this.firstName = "N/A";
 		this.email = "N/A";
 	}
-	
+
 	public UserProfile(String firstName, String email)
 	{   
 		this.firstName = firstName;
@@ -33,33 +33,36 @@ public class UserProfile implements Serializable{
 	{
 		return firstName + " " + email;
 	}
-	
+
 	public void exportProfile()
 	{
 		JFileChooser files = new JFileChooser();
 		File workingDirectory = new File(System.getProperty("user.dir"));
 		files.setCurrentDirectory(workingDirectory);
-		
+
 		files.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 		files.setAcceptAllFileFilterUsed(false);
-		files.showOpenDialog(null);
+		int rVal = files.showOpenDialog(null);
 		ObjectOutputStream oos = null;
 		FileOutputStream fout = null;
-		try{ 
-			fout = new FileOutputStream(files.getSelectedFile() + "/profile.ser", false);
-			oos = new ObjectOutputStream(fout);
-			oos.writeObject(this);
-			oos.close();
-			fout.close();
-		} catch (Exception ex) {}
-		finally {
-			if(oos != null){
-				try {
-					oos.close();
-				}
-				catch (IOException e)
-				{
-					e.printStackTrace();
+		if(rVal == JFileChooser.APPROVE_OPTION)
+		{
+			try{ 
+				fout = new FileOutputStream(files.getSelectedFile() + "/profile.ser", false);
+				oos = new ObjectOutputStream(fout);
+				oos.writeObject(this);
+				oos.close();
+				fout.close();
+			} catch (Exception ex) {}
+			finally {
+				if(oos != null){
+					try {
+						oos.close();
+					}
+					catch (IOException e)
+					{
+						e.printStackTrace();
+					}
 				}
 			}
 		}
@@ -71,33 +74,36 @@ public class UserProfile implements Serializable{
 		JFileChooser files = new JFileChooser();
 		File workingDirectory = new File(System.getProperty("user.dir"));
 		files.setCurrentDirectory(workingDirectory);
-		
+
 		ObjectInputStream ois = null;
 		FileInputStream fin = null;
 		FileNameExtensionFilter filter = new FileNameExtensionFilter("profile","ser");
 		files.addChoosableFileFilter(filter);
 		files.setAcceptAllFileFilterUsed(true);
-		files.showOpenDialog(null);
+		int rVal = files.showOpenDialog(null);
 		File file = files.getSelectedFile();
 		UserProfile input = new UserProfile();
-		try{ 
-			fin = new FileInputStream(file);
-			ois = new ObjectInputStream(fin);
-			input = (UserProfile)ois.readObject();
-			ois.close();
-			fin.close();
-			
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		}
-		finally {
-			if(ois != null){
-				try {
-					ois.close();
-				}
-				catch (IOException e)
-				{
-					e.printStackTrace();
+		if(rVal == JFileChooser.APPROVE_OPTION)
+		{
+			try{ 
+				fin = new FileInputStream(file);
+				ois = new ObjectInputStream(fin);
+				input = (UserProfile)ois.readObject();
+				ois.close();
+				fin.close();
+
+			} catch (Exception ex) {
+				ex.printStackTrace();
+			}
+			finally {
+				if(ois != null){
+					try {
+						ois.close();
+					}
+					catch (IOException e)
+					{
+						e.printStackTrace();
+					}
 				}
 			}
 		}

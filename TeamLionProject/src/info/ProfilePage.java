@@ -2,32 +2,23 @@ package info;
 
 import java.awt.BorderLayout;
 
-//Testing for the boys
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.*;
 import java.util.List;
-import java.util.Scanner;
 
 import javax.swing.JButton;
-import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JMenu;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JPopupMenu;
 import javax.swing.JTextField;
-import javax.swing.filechooser.FileNameExtensionFilter;
+import java.awt.Color;
+import javax.swing.UIManager;
 
-public class ProfilePage implements Serializable{
+public class ProfilePage extends JFrame implements Serializable{
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 7623978707456111660L;
 	private static final JFrame frame = new JFrame();
 	private List<String> settings = Files.readAllLines(Paths.get("files/Settings.txt"));
@@ -47,15 +38,33 @@ public class ProfilePage implements Serializable{
 	public ProfilePage() throws IOException{
 		firstName = settings.get(1);
 		email = settings.get(3);
-		frame.setLayout(new BorderLayout());
+		frame.getContentPane().setLayout(new BorderLayout());
+		changeData.setBackground(new Color(173, 255, 47));
+		changeData.setForeground(UIManager.getColor("SplitPaneDivider.draggingColor"));
+		panelSouth.setBackground(UIManager.getColor("SplitPaneDivider.draggingColor"));
 		panelSouth.add(changeData);
+		submitData.setForeground(UIManager.getColor("SplitPaneDivider.draggingColor"));
+		submitData.setBackground(new Color(173, 255, 47));
 		panelSouth.add(submitData);
+		exportData.setForeground(UIManager.getColor("SplitPaneDivider.draggingColor"));
+		exportData.setBackground(new Color(173, 255, 47));
+		panelNorth.setBackground(UIManager.getColor("SplitPaneDivider.draggingColor"));
 		panelNorth.add(exportData);
+		importData.setForeground(UIManager.getColor("SplitPaneDivider.draggingColor"));
+		importData.setBackground(new Color(173, 255, 47));
 		panelNorth.add(importData);
 		firstNameText = new javax.swing.JTextField(firstName);
+		firstNameText.setBounds(65, 5, 166, 20);
 		emailText = new javax.swing.JTextField(email);
+		emailText.setBounds(65, 30, 166, 20);
 		JLabel nameLabel = new JLabel("<html>Name:<br>");
+		nameLabel.setForeground(Color.WHITE);
+		nameLabel.setBounds(26, 8, 34, 14);
 		JLabel emailLabel = new JLabel("<html>Email:<br>");
+		emailLabel.setForeground(Color.WHITE);
+		emailLabel.setBounds(29, 33, 31, 14);
+		panelCenter.setBackground(UIManager.getColor("SplitPaneDivider.draggingColor"));
+		panelCenter.setLayout(null);
 		panelCenter.add(nameLabel);
 		panelCenter.add(firstNameText);
 		panelCenter.add(emailLabel);

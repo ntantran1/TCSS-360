@@ -37,23 +37,23 @@ public class AboutPage {
 		frame.setLayout(new BorderLayout());
 		JLabel versionText = new JLabel(version);
 		JLabel devs = new JLabel("<html>Developers:<br>");
+		devs.setForeground(Color.WHITE);
 		for(String s: developers) {	
 			devs.setText(devs.getText() + s + "<br>");
 		}
 		JPanel panel1 = new JPanel();
 		JPanel panel2 = new JPanel();
-		JPanel panel3 = new JPanel();
+		panel1.setBackground(new Color(173, 255, 47));
+		panel2.setBackground(UIManager.getColor("SplitPaneDivider.draggingColor"));
+
 		panel2.add(devs);
-		
-		JButton home = new JButton("Home");
-		panel3.add(home);
-		
+				
 		panel1.add(versionText);
 		frame.getContentPane().add(panel1, BorderLayout.NORTH);
 		frame.getContentPane().add(panel2, BorderLayout.CENTER);
-		frame.getContentPane().add(panel3, BorderLayout.SOUTH);
+		frame.setBackground(UIManager.getColor("SplitPaneDivider.draggingColor"));
 		frame.setVisible(true);
-		frame.setSize(400, 300);
+		frame.setSize(200, 200);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.setResizable(false);
 		frame.setTitle("About Page");

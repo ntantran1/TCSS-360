@@ -5,15 +5,15 @@
 package pages;
 import java.io.IOException;
 
+import javax.swing.UnsupportedLookAndFeelException;
 
-import info.AboutPage;
 import info.HomePage;
+import info.LoginPage;
 
 public class Main {
 	public static void main(String[] args) throws IOException {
-//		AboutPage about = new AboutPage();
-		HomePage home = new HomePage();
-		
-//		about.makePage();
+		LoginPage login = new LoginPage();
+		login.setVisible(true);
+		//HomePage home = new HomePage();
 	}
 }
