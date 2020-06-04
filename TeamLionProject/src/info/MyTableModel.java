@@ -5,9 +5,9 @@ import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
 
-class MyTableModel extends AbstractTableModel  {
+public class MyTableModel extends AbstractTableModel  {
 	private String[] columnNames = {"Object ID",
-			"Name",
+			"Name", 
 			"Appliance Type",
 			"Room(s)",
 			"Tags",

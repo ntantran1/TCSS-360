@@ -40,7 +40,7 @@ public class AddRowPage extends JFrame {
 
 	/**
 	 * Create the frame.
-	 */
+	 */ 
 	public AddRowPage(int rows) {
 		this.rows = rows;
 		setTitle("Add Row");

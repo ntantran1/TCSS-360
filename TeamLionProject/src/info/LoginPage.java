@@ -35,7 +35,7 @@ public class LoginPage extends JFrame {
 	private List<String> settings;
 	JButton loginButton = new JButton("LET ME IN");
 
-	/**
+	/** 
 	 * Create the frame.
 	 * @throws IOException 
 	 */
