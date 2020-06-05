@@ -1,10 +1,7 @@
 package tests;
 
 import static org.junit.Assert.*;
-
-import java.util.ArrayList;
 import java.util.List;
-
 import org.junit.Before;
 import org.junit.Test;
 
@@ -18,7 +15,6 @@ public class MyTableModelTest {
 	@Before
 	public void setup() {
 		page = new MyTableModel();
-		data = new ArrayList<Object[]>();
 	}
 
 	@Test
@@ -29,7 +25,8 @@ public class MyTableModelTest {
 
 	@Test
 	public void testGetColumnCount() {
-		fail("Not yet implemented");
+		int colLength = page.getColumnCount();
+		assertEquals(7, colLength);
 	}
 
 	@Test
@@ -38,38 +35,33 @@ public class MyTableModelTest {
 		Object storage = null;
 		Object kitchen = null;
 		page.addRow(1, fridge, storage, kitchen, kitchen, 03/01/2020, null, 1);
-		int count = data.size();
-		assertEquals(1, count);
+		int rowCount = page.getRowCount();
+		assertEquals(1, rowCount);
 	}
 
 	@Test
-	public void testGetColumnNameInt() {
-		fail("Not yet implemented");
+	public void testGetColumnName() {
+		String colName = page.getColumnName(1);
+		assertEquals("Name",colName);
 	}
 
 	@Test
 	public void testGetValueAt() {
-		fail("Not yet implemented");
+		Object fridge = null;
+		Object storage = "storage";
+		Object kitchen = null;
+		page.addRow(1, fridge, storage, kitchen, kitchen, 03/01/2020, null, 1);
+		assertEquals(storage, page.getValueAt(0,2));
 	}
 
 	@Test
 	public void testReset() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetColumnClassInt() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testAddRow() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testSetValueAtObjectIntInt() {
-		fail("Not yet implemented");
+		Object fridge = null;
+		Object storage = "storage";
+		Object kitchen = null;
+		page.addRow(1, fridge, storage, kitchen, kitchen, 03/01/2020, null, 1);
+		page.reset();
+		assertEquals(0, page.getRowCount());
 	}
 
 }
