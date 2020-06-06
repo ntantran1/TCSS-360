@@ -56,7 +56,7 @@ public class LoginPage extends JFrame {
 		lblNewLabel.setForeground(new Color(173, 255, 47));
 		lblNewLabel.setBounds(49, 42, 381, 85);
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel.setFont(new Font("Haettenschweiler", Font.PLAIN, 93));
+		lblNewLabel.setFont(new Font("Haettenschweiler", Font.PLAIN, 50));
 		contentPane.add(lblNewLabel);
 		
 		username = new JTextField();

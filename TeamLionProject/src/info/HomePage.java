@@ -2,26 +2,31 @@ package info;
 
 import java.awt.*;
 
+
 //Testing for the boys
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.nio.file.*;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.JTable;
 
-import java.awt.Dimension;
 
 public class HomePage extends JFrame{
 	static int rows;
@@ -31,8 +36,12 @@ public class HomePage extends JFrame{
 	JButton editProf = new JButton("View Profile");
 	JPanel panelNorth = new JPanel();
 	JPanel panelSouth = new JPanel();
+	
+	
+	
 	private final JMenuBar menuBar = new JMenuBar();
 	private final JMenu menuFile = new JMenu("File");
+	private final JMenuItem ExitMenuItem = new JMenuItem("Exit");
 	private final JMenu menuHelp = new JMenu("Help");
 	private final JMenuItem menuInstr = new JMenuItem("Instructions");
 	private final JMenuItem menuAbout = new JMenuItem("About");
@@ -43,6 +52,12 @@ public class HomePage extends JFrame{
 	final static JButton addRowButt = new JButton("Add New Row");
 	final static JButton delRowButt = new JButton("Delete Row");
 	private final JButton refreshButt = new JButton("Refresh");
+	
+	//i added
+	private final JLabel dateLabel = new JLabel("Date: ");
+	private final JLabel dateTF =  new JLabel(" ");
+	DateFormat dateFormat = new SimpleDateFormat("dd MMM YYYY");
+	Date date = new Date();
 
 	public HomePage() throws IOException{
 		about = new AboutPage();
@@ -54,6 +69,7 @@ public class HomePage extends JFrame{
 		menuBar.setBackground(Color.WHITE);
 		homeFrame.setJMenuBar(menuBar);
 		menuBar.add(menuFile);
+		menuFile.add(ExitMenuItem);
 		menuBar.add(menuHelp);
 		menuHelp.add(menuInstr);
 		menuHelp.add(menuAbout);
@@ -61,6 +77,7 @@ public class HomePage extends JFrame{
 		addListener();
 		makeTable();
 		rows = table.getRowCount();
+	
 	}
 	
 	public void makeTable() {
@@ -87,6 +104,14 @@ public class HomePage extends JFrame{
 		panelSouth.setBackground(UIManager.getColor("SplitPaneDivider.draggingColor"));
 		editProf.setBackground(new Color(173, 255, 47));
 		panelSouth.add(editProf);
+		
+		//i added
+		dateLabel.setForeground(Color.GREEN);
+		dateTF.setForeground(Color.GREEN);
+		panelSouth.add(dateLabel);
+		panelSouth.add(dateTF);
+		dateTF.setText(dateFormat.format(date));
+		
 		homeFrame.getContentPane().add(panelSouth);
 		panelNorth.setBounds(0, 0, 1184, 61);
 		panelNorth.setBackground(UIManager.getColor("SplitPaneDivider.draggingColor"));
@@ -127,6 +152,22 @@ public class HomePage extends JFrame{
 	}
 	
 	public void addListener() { 
+		
+		//i added
+		ExitMenuItem.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(final ActionEvent theE) {
+				int confirmButton = JOptionPane.showConfirmDialog(null, 
+	                    "Are you sure you want to exit ?", "Comfirm!",
+	                    JOptionPane.YES_NO_OPTION);
+	                if(confirmButton == JOptionPane.YES_OPTION) {
+	                    System.exit(0);
+	                } else {
+	                    setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+	                }
+			}
+		});
+		
 		menuAbout.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(final ActionEvent theE) {
