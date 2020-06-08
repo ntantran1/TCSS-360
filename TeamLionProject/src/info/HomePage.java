@@ -178,15 +178,8 @@ public class HomePage extends JFrame{
 		panelSouth.add(dateLabel);
 		panelSouth.add(dateTF);
 		dateTF.setText(dateFormat.format(date));
-//		centerPanel.setBounds(0, 424, 1184, 300);
-//		homeFrame.getContentPane().add(centerPanel);
-//		centerPanel.setBackground(UIManager.getColor("SplitPaneDivider.draggingColor"));
-//		centerPanel.add(updateRowButt).setBounds(0, 448, 60, 24);
 		homeFrame.add(updateRowButt);
-//		updateRowButt.setForeground(Color.DARK_GRAY);
-		updateRowButt.setBackground(Color.gray);
-//		updateRowButt.setOpaque(true);
-//		updateRowButt.setBorderPainted(false);
+		updateRowButt.setBackground(new Color(173, 255, 47));
 		homeFrame.add(rowIDTF);
 		homeFrame.add(rowNameTF);
 		homeFrame.add(rowTypeTF);
