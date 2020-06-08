@@ -76,6 +76,13 @@ public class HomePage extends JFrame{
 	final static JTextField  rowTagsTF = new JTextField();
 	final static JTextField  rowDateTF = new JTextField();
 	final static JTextField  rowFileTF = new JTextField();
+	final static JLabel  rowIDLabel = new JLabel("Selected ID:");
+	final static JLabel  rowNameLabel = new JLabel("Selected Name:");
+	final static JLabel  rowTypeLabel = new JLabel("Selected Type:");
+	final static JLabel  rowRoomLabel = new JLabel("Selected Room:");
+	final static JLabel  rowTagsLabel = new JLabel("Selected Room:");
+	final static JLabel  rowDateLabel = new JLabel("Selected Date:");
+	final static JLabel  rowFileLabel = new JLabel("Selected File:");
 
 	public HomePage() throws IOException{
 		about = new AboutPage();
@@ -140,14 +147,13 @@ public class HomePage extends JFrame{
 			String appTags = tableData.get(i + 4);
 			String appDate = tableData.get(i + 5);
 			String appFiles = tableData.get(i + 6);
-			//MyTableModel tableModel = (MyTableModel) table.getModel();
-            //Object[] newRow = {appID, appName, appType, appRooms, appTags, appDate, appFiles};
+			
 	        ((DefaultTableModel) savedTable).insertRow(savedTable.getRowCount(), new Object[] {appID, appName, appType, appRooms, appTags, appDate, appFiles});
 		}
 	}
 	
 	public void makeHomeFrame() {
-		homeFrame.setTitle("DashBoard Page for Team Lions");
+		homeFrame.setTitle("Team Lions Dashboard Page");
 		homeFrame.getContentPane().setLayout(null);
 		
 		panelSouth.setBounds(0, 706, 1184, 33);
@@ -177,7 +183,7 @@ public class HomePage extends JFrame{
 //		centerPanel.setBackground(UIManager.getColor("SplitPaneDivider.draggingColor"));
 //		centerPanel.add(updateRowButt).setBounds(0, 448, 60, 24);
 		homeFrame.add(updateRowButt);
-//		updateRowButt.setBackground(Color.RED);
+		updateRowButt.setForeground(Color.DARK_GRAY);
 		homeFrame.add(rowIDTF);
 		homeFrame.add(rowNameTF);
 		homeFrame.add(rowTypeTF);
@@ -185,14 +191,28 @@ public class HomePage extends JFrame{
 		homeFrame.add(rowTagsTF);
 		homeFrame.add(rowDateTF);
 		homeFrame.add(rowFileTF);
+		homeFrame.add(rowIDLabel);
+		homeFrame.add(rowNameLabel);
+		homeFrame.add(rowTypeLabel);
+		homeFrame.add(rowRoomLabel);
+		homeFrame.add(rowTagsLabel);
+		homeFrame.add(rowDateLabel);
+		homeFrame.add(rowFileLabel);
 		updateRowButt.setBounds(20, 430, 230, 35);
-		rowIDTF.setBounds(20, 480, 74, 30);
-		rowNameTF.setBounds(20, 510, 148, 30);
-		rowTypeTF.setBounds(20, 540, 148, 30);
-		rowRoomTF.setBounds(20, 570, 148, 30);
-		rowTagsTF.setBounds(20, 600, 148, 30);
-		rowDateTF.setBounds(20, 630, 148, 30);
-		rowFileTF.setBounds(20, 660, 148, 30);
+		rowIDLabel.setBounds(20, 480, 120, 30);
+		rowNameLabel.setBounds(20, 510, 120, 30);
+		rowTypeLabel.setBounds(20, 540, 120, 30);
+		rowRoomLabel.setBounds(20, 570, 120, 30);
+		rowTagsLabel.setBounds(20, 600, 120, 30);
+		rowDateLabel.setBounds(20, 630, 120, 30);
+		rowFileLabel.setBounds(20, 660, 120, 30);
+		rowIDTF.setBounds(125, 480, 74, 30);
+		rowNameTF.setBounds(125, 510, 148, 30);
+		rowTypeTF.setBounds(125, 540, 148, 30);
+		rowRoomTF.setBounds(125, 570, 148, 30);
+		rowTagsTF.setBounds(125, 600, 148, 30);
+		rowDateTF.setBounds(125, 630, 148, 30);
+		rowFileTF.setBounds(125, 660, 148, 30);
 		
 		panelNorth.add(refreshButt);
 		panelLeft.setBounds(0, 61, 10, 645);
@@ -341,15 +361,12 @@ public class HomePage extends JFrame{
        
        // button update row
        updateRowButt.addActionListener(new ActionListener(){
-
            @Override
            public void actionPerformed(ActionEvent theE) {
-            
                // i = the index of the selected row
                int i = table.getSelectedRow();
                
-               if(i >= 0) 
-               {
+               if(i >= 0) {
                   model.setValueAt(rowIDTF.getText(), i, 0);
                   model.setValueAt(rowNameTF.getText(), i, 1);
                   model.setValueAt(rowTypeTF.getText(), i, 2);
@@ -358,93 +375,81 @@ public class HomePage extends JFrame{
                   model.setValueAt(rowDateTF.getText(), i, 5);
                   model.setValueAt(rowFileTF.getText(), i, 6);
                  
-                 //update the txt database
-                //updating each line from the table to new temp file
-					File tempFile = new File("TeamLionProject/files/tempTable.txt");
-					int rowM = 1;
-					String newInput;
+                  //update the txt database
+                  File tempFile = new File("TeamLionProject/files/tempTable.txt");
+                  String newInput;
 					
-					//write each rows and columns to the temp txt file
-					for (int row = 0; row < table.getRowCount(); row++) {
-						for (int col = 0; col < table.getColumnCount(); col++) {
-							    	
-							newInput = model.getValueAt(row, col) + "\n";
-							    	
-							FileWriter fr = null;
-							try {
-								fr = new FileWriter(tempFile, true);
-								fr.write(newInput);
-								fr.close();
-							} catch (IOException e) {
-									// TODO Auto-generated catch block
-									e.printStackTrace();
-							}
-						}
-					}
-					
-					//rename the temp txt to Table.txt
-					tempFile.renameTo(new File("TeamLionProject/files/Table.txt"));
-							
-			               
-					JOptionPane.showMessageDialog(null, "Selected row updated successfully");
-                  
-                  
+                  //write each rows and columns to the temp txt file
+                  for (int row = 0; row < table.getRowCount(); row++) {
+                	  for (int col = 0; col < table.getColumnCount(); col++) {
+                		  newInput = model.getValueAt(row, col) + "\n";
+                		  FileWriter fr = null;
+                		  try {
+                			  fr = new FileWriter(tempFile, true);
+                			  fr.write(newInput);
+                			  fr.close();
+                		  } catch (IOException e) {
+                			  // TODO Auto-generated catch block
+                			  e.printStackTrace();
+                		  }
+                	  }
+                  }
+                  //rename the temp txt to Table.txt
+                  tempFile.renameTo(new File("TeamLionProject/files/Table.txt"));
+                  JOptionPane.showMessageDialog(null, "Selected row updated successfully");   
                }
                else{
                    System.out.println("Update Error");
                }
            }
        });
-		
-		
-		
-		menuAbout.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(final ActionEvent theE) {
-				about.makePage();
-			}
-		});
+       
+       menuAbout.addActionListener(new ActionListener() {
+    	   @Override
+    	   public void actionPerformed(final ActionEvent theE) {
+    		   about.makePage();
+    	   }
+       });
 
-		editProf.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(final ActionEvent theE) {
-				profile.makePage();
-			}
-		});
+       editProf.addActionListener(new ActionListener() {
+    	   @Override
+    	   public void actionPerformed(final ActionEvent theE) {
+    		   profile.makePage();
+    	   }
+       });
 		
-		addRowButt.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(final ActionEvent theE) {
-				AddRowPage addRowPage = new AddRowPage();
-				addRowPage.setVisible(true);
-		    }
-		});
+       addRowButt.addActionListener(new ActionListener() {
+    	   @Override
+    	   public void actionPerformed(final ActionEvent theE) {
+    		   AddRowPage addRowPage = new AddRowPage();
+    		   addRowPage.setVisible(true);
+		   	}
+       });
 
-		refreshButt.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(final ActionEvent theE) {
-				try {
-					tableData = Files.readAllLines(Paths.get("TeamLionProject/files/Table.txt"));
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				makeTable();
-			}
-		});
+       refreshButt.addActionListener(new ActionListener() {
+    	   @Override
+    	   public void actionPerformed(final ActionEvent theE) {
+    		   try {
+    			   tableData = Files.readAllLines(Paths.get("TeamLionProject/files/Table.txt"));
+    		   } catch (IOException e) {
+    			   // TODO Auto-generated catch block
+    			   e.printStackTrace();
+    		   }
+    		   makeTable();
+    	   }
+       });
 		
 		//i added
 		delRowButt.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(final ActionEvent theE) {
+				
 				if(table.getSelectedRow() != -1) {
-					
 					int confirmButton = JOptionPane.showConfirmDialog(null, 
-							"Are you sure you want to exit ?", "Comfirm!",
-		                    JOptionPane.YES_NO_OPTION);
+							"Are you sure you want to delete this Row ?", "Comfirm!",
+							JOptionPane.YES_NO_OPTION);
 					if(confirmButton == JOptionPane.YES_OPTION) {
-						
-						
+
 //						int rowNum = table.getSelectedRow();
 //						for (int i = rowNum; i <= 3; i++ ) {
 //							model.setValueAt(table.getValueAt(i+1, 0), i+2, 0);
@@ -461,10 +466,8 @@ public class HomePage extends JFrame{
 						
 						//write each rows and columns to the temp txt file
 						for (int row = 0; row < table.getRowCount(); row++) {
-							for (int col = 0; col < table.getColumnCount(); col++) {
-								    	
-								newInput = model.getValueAt(row, col) + "\n";
-								    	
+							for (int col = 0; col < table.getColumnCount(); col++) {    	
+								newInput = model.getValueAt(row, col) + "\n";   	
 								FileWriter fr = null;
 								try {
 									fr = new FileWriter(tempFile, true);
@@ -479,11 +482,7 @@ public class HomePage extends JFrame{
 						
 						//rename the temp txt to Table.txt
 						tempFile.renameTo(new File("TeamLionProject/files/Table.txt"));
-								
-				               
-						JOptionPane.showMessageDialog(null, "Selected row deleted successfully");
-				               
-				               
+						JOptionPane.showMessageDialog(null, "Selected row deleted successfully");        
 					} else {
 						setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 					}
