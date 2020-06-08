@@ -183,7 +183,10 @@ public class HomePage extends JFrame{
 //		centerPanel.setBackground(UIManager.getColor("SplitPaneDivider.draggingColor"));
 //		centerPanel.add(updateRowButt).setBounds(0, 448, 60, 24);
 		homeFrame.add(updateRowButt);
-		updateRowButt.setForeground(Color.DARK_GRAY);
+//		updateRowButt.setForeground(Color.DARK_GRAY);
+		updateRowButt.setBackground(Color.gray);
+//		updateRowButt.setOpaque(true);
+//		updateRowButt.setBorderPainted(false);
 		homeFrame.add(rowIDTF);
 		homeFrame.add(rowNameTF);
 		homeFrame.add(rowTypeTF);
@@ -343,20 +346,30 @@ public class HomePage extends JFrame{
         // get selected row data From table to textfields 
        table.addMouseListener(new MouseAdapter(){
        
-       @Override
-       public void mouseClicked(MouseEvent theE){
+    	   @Override
+    	   public void mouseClicked(MouseEvent theE){
+    		   // i = the index of the selected row
+    		   int i = table.getSelectedRow();
            
-           // i = the index of the selected row
-           int i = table.getSelectedRow();
-           
-           rowIDTF.setText(model.getValueAt(i, 0).toString());
-           rowNameTF.setText(model.getValueAt(i, 1).toString());
-           rowTypeTF.setText(model.getValueAt(i, 2).toString());
-           rowRoomTF.setText(model.getValueAt(i, 3).toString());
-           rowTagsTF.setText(model.getValueAt(i, 4).toString());
-           rowDateTF.setText(model.getValueAt(i, 5).toString());
-           rowFileTF.setText(model.getValueAt(i, 6).toString());
-       }
+    		   if(i >= 0) {
+    			   rowIDTF.setText(model.getValueAt(i, 0).toString());
+    			   rowNameTF.setText(model.getValueAt(i, 1).toString());
+    			   rowTypeTF.setText(model.getValueAt(i, 2).toString());
+    			   rowRoomTF.setText(model.getValueAt(i, 3).toString());
+    			   rowTagsTF.setText(model.getValueAt(i, 4).toString());
+    			   rowDateTF.setText(model.getValueAt(i, 5).toString());
+    			   rowFileTF.setText(model.getValueAt(i, 6).toString());
+    		   } else {
+    			   rowIDTF.setText("");
+    			   rowNameTF.setText("");
+    			   rowTypeTF.setText("");
+    			   rowRoomTF.setText("");
+    			   rowTagsTF.setText("");
+    			   rowDateTF.setText("");
+    			   rowFileTF.setText("");
+    			   
+    		   }
+    	   }
        });
        
        // button update row
