@@ -12,8 +12,20 @@ import info.LoginPage;
 
 public class Main {
 	public static void main(String[] args) throws IOException {
-		LoginPage login = new LoginPage();
-		login.setVisible(true);
-		//HomePage home = new HomePage();
+		
+		java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+            	LoginPage login;
+				try {
+					login = new LoginPage();
+					login.setVisible(true);
+					
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+            }
+        });
+		
 	}
 }

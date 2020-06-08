@@ -6,6 +6,7 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
 import java.awt.Font;
@@ -18,8 +19,12 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 
 import javax.swing.JButton;
+import javax.swing.JFormattedTextField;
+
 import java.awt.Color;
 import javax.swing.UIManager;
 
@@ -37,12 +42,14 @@ public class AddRowPage extends JFrame {
 	private JLabel lblNewLabel_4;
 	private JButton saveButton;
 	int rows;
+	
+	DefaultTableModel model;
 
 	/**
 	 * Create the frame.
 	 */ 
-	public AddRowPage(int rows) {
-		this.rows = rows;
+	public AddRowPage() {
+//		this.rows = rows;
 		setTitle("Add Row");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
@@ -54,27 +61,27 @@ public class AddRowPage extends JFrame {
 
 		textName = new JTextField();
 		textName.setColumns(20);
-		textName.setBounds(226, 48, 86, 20);
+		textName.setBounds(226, 48, 100, 20);
 		contentPane.add(textName);
 
 		textType = new JTextField();
 		textType.setColumns(20);
-		textType.setBounds(226, 79, 86, 20);
+		textType.setBounds(226, 79, 100, 20);
 		contentPane.add(textType);
 
 		textRoom = new JTextField();
 		textRoom.setColumns(20);
-		textRoom.setBounds(226, 110, 86, 20);
+		textRoom.setBounds(226, 110, 100, 20);
 		contentPane.add(textRoom);
 
 		textTags = new JTextField();
 		textTags.setColumns(40);
-		textTags.setBounds(226, 141, 86, 20);
+		textTags.setBounds(226, 141, 100, 20);
 		contentPane.add(textTags);
 
-		textDate = new JTextField();
+		textDate = new JTextField("mm/dd/yyyy");
 		textDate.setColumns(10);
-		textDate.setBounds(226, 172, 86, 20);
+		textDate.setBounds(226, 172, 100, 20);
 		contentPane.add(textDate);
 
 		JLabel lblNewLabel = new JLabel("Appliance Name:");
@@ -92,7 +99,7 @@ public class AddRowPage extends JFrame {
 		lblNewLabel_2 = new JLabel("Room:");
 		lblNewLabel_2.setForeground(new Color(255, 255, 255));
 		lblNewLabel_2.setFont(new Font("Arial", Font.BOLD, 11));
-		lblNewLabel_2.setBounds(181, 113, 35, 14);
+		lblNewLabel_2.setBounds(180, 113, 60, 14);
 		contentPane.add(lblNewLabel_2);
 
 		lblNewLabel_3 = new JLabel("Tags(Comma seperated):");
@@ -113,16 +120,96 @@ public class AddRowPage extends JFrame {
 		saveButton.setBounds(223, 211, 89, 23);
 		contentPane.add(saveButton);
 		addListener();
+		
+		model = (DefaultTableModel) HomePage.table.getModel();
+	}
+	
+	
+
+	public JTextField getTextName() {
+		return textName;
+	}
+
+
+
+	public void setTextName(JTextField textName) {
+		this.textName = textName;
+	}
+
+
+
+	public JTextField getTextType() {
+		return textType;
+	}
+
+
+
+	public void setTextType(JTextField textType) {
+		this.textType = textType;
+	}
+
+
+
+	public JTextField getTextRoom() {
+		return textRoom;
+	}
+
+
+
+	public void setTextRoom(JTextField textRoom) {
+		this.textRoom = textRoom;
+	}
+
+
+
+	public JTextField getTextTags() {
+		return textTags;
+	}
+
+
+
+	public void setTextTags(JTextField textTags) {
+		this.textTags = textTags;
+	}
+
+
+
+	public JTextField getTextDate() {
+		return textDate;
+	}
+
+
+
+	public void setTextDate(JTextField textDate) {
+		this.textDate = textDate;
+	}
+
+
+
+	public JLabel getLblApplianceType() {
+		return lblApplianceType;
+	}
+
+
+
+	public void setLblApplianceType(JLabel lblApplianceType) {
+		this.lblApplianceType = lblApplianceType;
 	}
 
 	public void addListener() { 
 		saveButton.addActionListener(new ActionListener() {
-			@Override
 			public void actionPerformed(final ActionEvent theE) {
-				File file = new File("files/Table.txt");
-				String newInput = "\n" + (rows + 1) + "\n" + textName.getText() + "\n" + textType.getText()
+				model.insertRow(model.getRowCount(), new Object[]{model.getRowCount()+1, getTextName().getText(), 
+						getTextType().getText(), getTextRoom().getText(),
+						getTextTags().getText(), getTextDate().getText(), "File Holder"});
+				
+				//storing in the table file
+				File file = new File("TeamLionProject/files/Table.txt");
+				int rowNum = model.getRowCount();
+				String newInput = rowNum + "\n" + textName.getText() + "\n" + textType.getText()
 						+ "\n" + textRoom.getText() + "\n" + textTags.getText() + "\n"
-						+ textDate.getText() + "\n" + "Files Placeholder";
+						+ textDate.getText() + "\n" + "Files Placeholder" + "\n";
+				
 				FileWriter fr = null;
 				try {
 					fr = new FileWriter(file, true);
@@ -134,6 +221,7 @@ public class AddRowPage extends JFrame {
 				}
 				dispose();
 			}
+			
 		});
 	}
 }

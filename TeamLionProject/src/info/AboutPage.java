@@ -18,7 +18,7 @@ public class AboutPage {
 	String version;
 	
 	public AboutPage() throws IOException {
-		Scanner input = new Scanner(Paths.get("files/ProjectInfo.txt"));
+		Scanner input = new Scanner(Paths.get("TeamLionProject/files/ProjectInfo.txt"));
 		developers = new String[4];
 		getInfo(input);
 	}
