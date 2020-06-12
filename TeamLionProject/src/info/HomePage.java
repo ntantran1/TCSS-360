@@ -103,15 +103,14 @@ public class HomePage extends JFrame{
 	final static JLabel  rowRoomLabel = new JLabel("Selected Room:");
 	final static JLabel  rowTagsLabel = new JLabel("Selected Room:");
 	final static JLabel  rowDateLabel = new JLabel("Selected Date:");
-
+	
 	List<Vector<Object>> fileList = new ArrayList<Vector<Object>>();
 	private JButton addFileButt = new JButton("Add File to row");
 	private JButton addLinkButt = new JButton("Add Link to row");
-	JToggleButton deleteButt;
-	boolean deleteMode;
 	JList list;
 	private JButton openButt = new JButton("Open selected file");
 	private JTextField linkText;
+	private JButton deleteButt = new JButton("Delete Selected File");
 	
 	/**
 	 * A constructor to start the home page
@@ -119,7 +118,6 @@ public class HomePage extends JFrame{
 	 */
 	public HomePage() throws IOException{
 		index = 1;
-		deleteMode = false;
 		about = new AboutPage();
 		profile = new ProfilePage();
 		homeFrame = new JFrame();
@@ -135,20 +133,20 @@ public class HomePage extends JFrame{
 		menuHelp.add(menuAbout);
 		homeFrame.setVisible(true);
 		addListener();
-		makeTable();
+		makeTable(true);
 		rows = table.getRowCount();
 		model = (DefaultTableModel) table.getModel();
-
 	}
 	
 	/** 
 	 * Method to make the table for the homepage
 	 * @throws IOException
 	 */
-	public void makeTable() throws IOException {
+	public void makeTable(boolean first) throws IOException {
 		table.setModel(new javax.swing.table.DefaultTableModel(
 				new Object [][] {
-					//{null, null, null, null, null, null, null},
+
+					//	                {null, null, null, null, null, null, null},
 				},
 				new String [] {
 						"ID", "Appliance Name", "Appliance Type", "Room", "Tags", "Date Added", "Files"
@@ -161,7 +159,7 @@ public class HomePage extends JFrame{
 				tableAncestorAdded(evt);
 			}
 			private void tableAncestorAdded(AncestorEvent evt) {
-
+				// TODO Auto-generated method stub
 			}
 			public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
 			}
@@ -171,7 +169,7 @@ public class HomePage extends JFrame{
 
 
 		DefaultTableModel savedTable = (DefaultTableModel) table.getModel();
-
+		//		tableModel.reset();
 		for(int i = 0; i < tableData.size(); i = i + 7) {
 			String appID = tableData.get(i);
 			String appName = tableData.get(i + 1);
@@ -183,19 +181,22 @@ public class HomePage extends JFrame{
 			int appIndex = Integer.parseInt(appID);
 			while(appIndex >= fileList.size())
 				fileList.add(new Vector<Object>());
-			fileList.add(appIndex, new Vector<Object>());
-			index++;
-			File tempFile = new File("files/app" + appID + "Links.txt");
-			String newInput;
-			if(tempFile.exists()) {
-				List<String> linkData = Files.readAllLines(Paths.get("files/app" + appID + "Links.txt"));
-				for(int j = 1; j <= linkData.size(); j++) {
-					for(String s: linkData) {
-						fileList.get(appIndex - 1).add(s);
+			if(first) {
+				fileList.add(appIndex, new Vector<Object>());
+				index++;
+				File tempFile = new File("files/app" + appID + "Links.txt");
+				String newInput;
+				if(tempFile.exists()) {
+					List<String> linkData = Files.readAllLines(Paths.get("files/app" + appID + "Links.txt"));
+					for(int j = 1; j <= linkData.size(); j++) {
+						for(String s: linkData) {
+							fileList.get(appIndex - 1).add(s);
+						}
 					}
 				}
-			} else {
-				tempFile.createNewFile();
+				else {
+					tempFile.createNewFile();
+				}
 			}
 			((DefaultTableModel) savedTable).insertRow(savedTable.getRowCount(), new Object[] {appID, appName, appType, appRooms, appTags, appDate, appFiles});
 		}
@@ -294,10 +295,6 @@ public class HomePage extends JFrame{
 		addFileButt.setBounds(946, 430, 218, 35);
 
 		homeFrame.getContentPane().add(addFileButt);
-
-		deleteButt = new JToggleButton("Delete selected file");
-		deleteButt.setBounds(946, 660, 218, 35);
-		homeFrame.getContentPane().add(deleteButt);
 		openButt.setBackground(new Color(173, 255, 47));
 		openButt.setBounds(946, 555, 218, 35);
 
@@ -308,9 +305,14 @@ public class HomePage extends JFrame{
 		linkText.setBounds(946, 481, 218, 20);
 		homeFrame.getContentPane().add(linkText);
 		linkText.setColumns(10);
+		deleteButt.setBackground(Color.RED);
+		deleteButt.setBounds(946, 660, 218, 35);
+
+		homeFrame.getContentPane().add(deleteButt);
 
 		//pack();
 	}
+	
 	/**
 	 * Method that add listener for the homepage components
 	 */
@@ -364,6 +366,7 @@ public class HomePage extends JFrame{
 					sorter1.setSortable(4, false);
 					sorter1.setSortable(6, false);
 					break;
+
 				case "Sort By Type":
 					TableRowSorter<TableModel> sorter2 = new TableRowSorter<>(table.getModel());
 					table.setRowSorter(sorter2);
@@ -391,6 +394,7 @@ public class HomePage extends JFrame{
 					break;
 
 				case "Sort By Date":
+					//TODO
 					TableRowSorter<TableModel> sorter4 = new TableRowSorter<>(table.getModel());
 					table.setRowSorter(sorter4);
 					List<RowSorter.SortKey> sortKeys4 = new ArrayList<>();
@@ -459,6 +463,7 @@ public class HomePage extends JFrame{
 					if(rVal == JFileChooser.APPROVE_OPTION)
 					{
 						fileList.get(i).add(files.getSelectedFile().toString());
+						DefaultListModel listmodel = new DefaultListModel();
 						list.setListData(fileList.get(i));
 					}
 					File tempFile = new File("files/app" + id + "Links.txt");
@@ -495,16 +500,18 @@ public class HomePage extends JFrame{
 		addLinkButt.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent theE) {
+
 				int modelRow = table.getSelectedRow();
 				int i = table.convertRowIndexToModel(modelRow);
-				int id = Integer.parseInt((String) model.getValueAt(i, 0));
 				if(linkText.getText().contains(" "))
 					JOptionPane.showMessageDialog(getComponent(0), "Invalid link");
 				else if(i >= 0) {
+					int id = Integer.parseInt((String) model.getValueAt(i, 0));
 					if(!linkText.getText().contains("http://"))
 						fileList.get(i).add("http://" + linkText.getText());	
 					else
 						fileList.get(i).add(linkText.getText());
+					DefaultListModel listmodel = new DefaultListModel();
 					list.setListData(fileList.get(i));
 					File tempFile = new File("files/app" + id + "Links.txt");
 					String newInput = "";
@@ -541,7 +548,7 @@ public class HomePage extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent theE) {
 				String select = (String) list.getSelectedValue();
-				if(select.substring(0,  8).equals("https://")) {
+				if(select.substring(0,  7).equals("http://")) {
 					try {
 						Desktop.getDesktop().browse(new URI((String) select));
 					} catch (IOException | URISyntaxException e) {
@@ -560,7 +567,48 @@ public class HomePage extends JFrame{
 				}
 			}
 		});
-
+		deleteButt.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent theE) {
+				int modelRow = table.getSelectedRow();
+				int i = table.convertRowIndexToModel(modelRow);
+				if(i >= 0) {
+					int id = Integer.parseInt((String) model.getValueAt(i, 0));
+					System.out.println(fileList.get(i).toString());
+					fileList.get(i).remove((String) list.getSelectedValue());
+					System.out.println(fileList.get(i).toString());
+					DefaultListModel listmodel = new DefaultListModel();
+					list.setListData(fileList.get(i));
+					File tempFile = new File("files/app" + id + "Links.txt");
+					String newInput = "";
+					try {
+						//Flush file
+						PrintWriter writer = new PrintWriter(tempFile);
+						writer.print("");
+						writer.close();
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					for(Object s: fileList.get(i)) {
+						newInput += (String) s;
+						newInput += "\n";
+					}
+					FileWriter fr = null;
+					try {
+						fr = new FileWriter(tempFile, true);
+						fr.write(newInput);
+						fr.close();
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+				else {
+					JOptionPane.showMessageDialog(getComponent(0), "No row selected");
+				}
+			}
+		});
 		// button update row
 		updateRowButt.addActionListener(new ActionListener(){
 			@Override
@@ -644,32 +692,20 @@ public class HomePage extends JFrame{
 			@Override
 			public void actionPerformed(final ActionEvent theE) {
 				try {
-					tableData = Files.readAllLines(Paths.get("TeamLionProject/files/Table.txt"));
+					tableData = Files.readAllLines(Paths.get("files/Table.txt"));
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				try {
-					makeTable();
+					makeTable(false);
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
 		});
-		
-		menuInstr.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(final ActionEvent theE) {
-				try {
-					InstrPage instrPage = new InstrPage();
-				} catch (IOException e) {
-					
-					e.printStackTrace();
-				}
-				
-			}
-		});
+
 		//i added
 		delRowButt.addActionListener(new ActionListener() {
 			@Override
