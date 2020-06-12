@@ -461,8 +461,8 @@ public class HomePage extends JFrame{
 				files.setCurrentDirectory(workingDirectory);
 				int modelRow = table.getSelectedRow();
 				int i = table.convertRowIndexToModel(modelRow);
-				int id = Integer.parseInt((String) model.getValueAt(i, 0));
 				if(i >= 0) {
+					int id = Integer.parseInt((String) model.getValueAt(i, 0));
 					int rVal = files.showOpenDialog(null);
 					if(rVal == JFileChooser.APPROVE_OPTION)
 					{
