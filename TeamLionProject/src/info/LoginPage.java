@@ -43,7 +43,7 @@ public class LoginPage extends JFrame {
 //		BufferedImage image = ImageIO.read(new File("resource/LimeLogin.jpg"));
 		//contentPane.add(image);
 		
-		settings = Files.readAllLines(Paths.get("TeamLionProject/files/Settings.txt"));
+		settings = Files.readAllLines(Paths.get("files/Settings.txt"));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 607, 369);
 		contentPane = new JPanel();
@@ -119,8 +119,8 @@ public class LoginPage extends JFrame {
 					}
 				}
 				else {
-					System.out.println(storedName);
-					System.out.println(storedEmail);
+					System.out.println("Username: " + storedName);
+					System.out.println("Email: " + storedEmail);
 					JOptionPane.showMessageDialog(getComponent(0), "Yo we got a big phony over here");
 				}
 			}
