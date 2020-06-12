@@ -59,8 +59,8 @@ import javax.swing.JList;
  * 
  * @ author Kevin
  * @ author rabin
- * @ aman
- * @ kevin
+ * @ author aman
+ * @ author nhan
  *
  */
 public class HomePage extends JFrame{
@@ -335,7 +335,6 @@ public class HomePage extends JFrame{
 					sorter1.setSortable(4, false);
 					sorter1.setSortable(6, false);
 					break;
-
 				case "Sort By Type":
 					TableRowSorter<TableModel> sorter2 = new TableRowSorter<>(table.getModel());
 					table.setRowSorter(sorter2);
@@ -575,7 +574,19 @@ public class HomePage extends JFrame{
 				makeTable();
 			}
 		});
-
+		
+		menuInstr.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(final ActionEvent theE) {
+				try {
+					InstrPage instrPage = new InstrPage();
+				} catch (IOException e) {
+					
+					e.printStackTrace();
+				}
+				
+			}
+		});
 		//i added
 		delRowButt.addActionListener(new ActionListener() {
 			@Override
