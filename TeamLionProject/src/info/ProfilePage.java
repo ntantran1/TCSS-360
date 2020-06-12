@@ -83,11 +83,16 @@ public class ProfilePage extends JFrame implements Serializable{
 		frame.setResizable(false);
 		frame.setTitle("Profile Page");
 	}
-
+	
+	/**
+	 * Method to make the page visible
+	 */
 	public void makePage() {
 		frame.setVisible(true);
 	}
-
+	/**
+	 * Method to add listener
+	 */
 	public void addListener() { 
 
 		firstNameText.addActionListener(new ActionListener() {
@@ -154,6 +159,9 @@ public class ProfilePage extends JFrame implements Serializable{
 		
 		
 	} 
+	/**
+	 * Method that store the user info to the file
+	 */
 	public void writeProfile() {
 		settings.set(1, firstName);
 		settings.set(3, email);

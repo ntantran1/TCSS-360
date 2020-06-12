@@ -102,6 +102,9 @@ public class LoginPage extends JFrame {
 		addListener();
 	}
 	
+	/**
+	 * A method to add all the listener for the buttons
+	 */
 	public void addListener() { 
 		loginButton.addActionListener(new ActionListener() {
 			@Override
