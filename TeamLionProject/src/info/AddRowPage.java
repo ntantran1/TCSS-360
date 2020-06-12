@@ -42,13 +42,14 @@ public class AddRowPage extends JFrame {
 	private JLabel lblNewLabel_4;
 	private JButton saveButton;
 	int rows;
-	
+	int index;
 	DefaultTableModel model;
 
 	/**
 	 * Create the frame.
 	 */ 
-	public AddRowPage() {
+	public AddRowPage(int index) {
+		this.index = index;
 //		this.rows = rows;
 		setTitle("Add Row");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -79,7 +80,7 @@ public class AddRowPage extends JFrame {
 		textTags.setBounds(226, 141, 100, 20);
 		contentPane.add(textTags);
 
-		textDate = new JTextField("mm/dd/yyyy");
+		textDate = new JTextField("yyyy/mm/dd");
 		textDate.setColumns(10);
 		textDate.setBounds(226, 172, 100, 20);
 		contentPane.add(textDate);
@@ -199,14 +200,14 @@ public class AddRowPage extends JFrame {
 	public void addListener() { 
 		saveButton.addActionListener(new ActionListener() {
 			public void actionPerformed(final ActionEvent theE) {
-				model.insertRow(model.getRowCount(), new Object[]{model.getRowCount()+1, getTextName().getText(), 
+				model.insertRow(model.getRowCount(), new Object[]{index, getTextName().getText(), 
 						getTextType().getText(), getTextRoom().getText(),
 						getTextTags().getText(), getTextDate().getText(), "File Holder"});
 				
 				//storing in the table file
-				File file = new File("TeamLionProject/files/Table.txt");
+				File file = new File("files/Table.txt");
 				int rowNum = model.getRowCount();
-				String newInput = rowNum + "\n" + textName.getText() + "\n" + textType.getText()
+				String newInput = index + "\n" + textName.getText() + "\n" + textType.getText()
 						+ "\n" + textRoom.getText() + "\n" + textTags.getText() + "\n"
 						+ textDate.getText() + "\n" + "Files Placeholder" + "\n";
 				
