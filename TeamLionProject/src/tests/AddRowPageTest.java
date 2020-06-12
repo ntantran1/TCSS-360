@@ -10,7 +10,7 @@ public class AddRowPageTest {
 	
 	@Test
 	public void testAddRowPage() {
-		page = new AddRowPage();
+//		page = new AddRowPage();
 	}
 
 }

@@ -43,7 +43,7 @@ public class LoginPage extends JFrame {
 //		BufferedImage image = ImageIO.read(new File("resource/LimeLogin.jpg"));
 		//contentPane.add(image);
 		
-		settings = Files.readAllLines(Paths.get("files/Settings.txt"));
+		settings = Files.readAllLines(Paths.get("TeamLionProject/files/Settings.txt"));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 607, 369);
 		contentPane = new JPanel();

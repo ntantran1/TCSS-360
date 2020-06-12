@@ -1,7 +1,10 @@
+/*
+ * TCSS 360 Team Lion Project
+ * Spring 2020
+ */
 package info;
 
 import java.awt.*;
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -21,10 +24,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Vector;
 import java.awt.Desktop;
-
 import java.net.URI;
 import java.net.URISyntaxException;
-
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -51,16 +52,26 @@ import javax.swing.SortOrder;
 import javax.swing.JToggleButton;
 import javax.swing.JList;
 
+/**
+ * Home page class for team lion.
+ * This is also our dashboard board page.
+ * This class is reposible for most of out app functions.
+ * 
+ * @ author Kevin
+ * @ author rabin
+ * @ aman
+ * @ kevin
+ *
+ */
 public class HomePage extends JFrame{
 	static int rows;
 	private int index;
-	private List<String> tableData = Files.readAllLines(Paths.get("files/Table.txt"));
+	private List<String> tableData = Files.readAllLines(Paths.get("TeamLionProject/files/Table.txt"));
 	private AboutPage about;
 	private ProfilePage profile;
 	JButton editProf = new JButton("View Profile");
 	JPanel panelNorth = new JPanel();
 	JPanel panelSouth = new JPanel();
-
 	private final JMenuBar menuBar = new JMenuBar();
 	private final JMenu menuFile = new JMenu("File");
 	private final JMenuItem ExitMenuItem = new JMenuItem("Exit");
@@ -73,9 +84,7 @@ public class HomePage extends JFrame{
 	JFrame homeFrame;
 	final static JButton addRowButt = new JButton("Add New Row");
 	final static JButton delRowButt = new JButton("Delete Row");
-	private final JButton refreshButt = new JButton("Refresh");
-
-	//i added
+	private final JButton refreshButt = new JButton("Refresh/Home");
 	private final JLabel dateLabel = new JLabel("Date/Time: ");
 	private final JLabel dateTF =  new JLabel(" ");
 	DateFormat dateFormat = new SimpleDateFormat("dd MMM YYYY   [HH:mm:ss]");
@@ -131,8 +140,7 @@ public class HomePage extends JFrame{
 	public void makeTable() {
 		table.setModel(new javax.swing.table.DefaultTableModel(
 				new Object [][] {
-
-					//	                {null, null, null, null, null, null, null},
+					//{null, null, null, null, null, null, null},
 				},
 				new String [] {
 						"ID", "Appliance Name", "Appliance Type", "Room", "Tags", "Date Added", "Files"
@@ -355,7 +363,6 @@ public class HomePage extends JFrame{
 					break;
 
 				case "Sort By Date":
-					//TODO
 					TableRowSorter<TableModel> sorter4 = new TableRowSorter<>(table.getModel());
 					table.setRowSorter(sorter4);
 					List<RowSorter.SortKey> sortKeys4 = new ArrayList<>();
@@ -560,7 +567,7 @@ public class HomePage extends JFrame{
 			@Override
 			public void actionPerformed(final ActionEvent theE) {
 				try {
-					tableData = Files.readAllLines(Paths.get("files/Table.txt"));
+					tableData = Files.readAllLines(Paths.get("TeamLionProject/files/Table.txt"));
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
