@@ -103,7 +103,11 @@ public class HomePage extends JFrame{
 	JList list;
 	private JButton openButt = new JButton("Open selected file");
 	private JTextField linkText;
-
+	
+	/**
+	 * A constructor to start the home page
+	 * @throws IOException
+	 */
 	public HomePage() throws IOException{
 		index = 1;
 		deleteMode = false;
@@ -127,7 +131,11 @@ public class HomePage extends JFrame{
 		model = (DefaultTableModel) table.getModel();
 
 	}
-
+	
+	/** 
+	 * Method to make the table for the homepage
+	 * @throws IOException
+	 */
 	public void makeTable() throws IOException {
 		table.setModel(new javax.swing.table.DefaultTableModel(
 				new Object [][] {
@@ -185,7 +193,10 @@ public class HomePage extends JFrame{
 			((DefaultTableModel) savedTable).insertRow(savedTable.getRowCount(), new Object[] {appID, appName, appType, appRooms, appTags, appDate, appFiles});
 		}
 	}
-
+	
+	/**
+	 * Method that create the frame for the homepage
+	 */
 	public void makeHomeFrame() {
 		homeFrame.setTitle("Team Lions Dashboard Page");
 		homeFrame.getContentPane().setLayout(null);
@@ -293,6 +304,9 @@ public class HomePage extends JFrame{
 
 		//pack();
 	}
+	/**
+	 * Method that add listener for the homepage components
+	 */
 	public void addListener() { 
 
 		//i added

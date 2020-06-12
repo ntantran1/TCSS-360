@@ -18,22 +18,33 @@ public class UserProfile implements Serializable{
 	private static final long serialVersionUID = -6160667524963929997L;
 	public String firstName;
 	public String email;
-
+	/**
+	 * A constructor for UserProfile
+	 */
 	public UserProfile() {
 		this.firstName = "N/A";
 		this.email = "N/A";
 	}
-
+	/**
+	 * A constructor that provide name and email
+	 * @param firstName
+	 * @param email
+	 */
 	public UserProfile(String firstName, String email)
 	{   
 		this.firstName = firstName;
 		this.email = email;
 	}
+	/**
+	 * A method that return a string of firstname and email
+	 */
 	public String toString()
 	{
 		return firstName + " " + email;
 	}
-
+	/**
+	 * A method to export info
+	 */
 	public void exportProfile()
 	{
 		JFileChooser files = new JFileChooser();
@@ -68,7 +79,10 @@ public class UserProfile implements Serializable{
 		}
 
 	}
-
+	
+	/**
+	 * A method to import file
+	 */
 	public void importProfile()
 	{
 		JFileChooser files = new JFileChooser();
