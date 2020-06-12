@@ -574,9 +574,7 @@ public class HomePage extends JFrame{
 				int i = table.convertRowIndexToModel(modelRow);
 				if(i >= 0) {
 					int id = Integer.parseInt((String) model.getValueAt(i, 0));
-					System.out.println(fileList.get(i).toString());
 					fileList.get(i).remove((String) list.getSelectedValue());
-					System.out.println(fileList.get(i).toString());
 					DefaultListModel listmodel = new DefaultListModel();
 					list.setListData(fileList.get(i));
 					File tempFile = new File("files/app" + id + "Links.txt");
