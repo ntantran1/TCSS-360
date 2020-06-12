@@ -27,7 +27,11 @@ import javax.swing.JFormattedTextField;
 
 import java.awt.Color;
 import javax.swing.UIManager;
-
+/**
+ * A method that the rows to the Home Page
+ * @author 
+ *
+ */
 public class AddRowPage extends JFrame {
 
 	private JPanel contentPane;
@@ -126,77 +130,116 @@ public class AddRowPage extends JFrame {
 	}
 	
 	
-
+	/**
+	 * Text Field for name
+	 * @return textName
+	 */
 	public JTextField getTextName() {
 		return textName;
 	}
 
 
-
+	/**
+	 * Method to set the name to textName textfield
+	 * @param textName
+	 */
 	public void setTextName(JTextField textName) {
 		this.textName = textName;
 	}
 
 
-
+	/**
+	 * Meethod to the textType
+	 * @return textType
+	 */
 	public JTextField getTextType() {
 		return textType;
 	}
 
 
-
+	/**
+	 * Method so set textType
+	 * @param textType
+	 */
 	public void setTextType(JTextField textType) {
 		this.textType = textType;
 	}
 
 
-
+	/**
+	 * Method to get the textRoom
+	 * @return
+	 */
 	public JTextField getTextRoom() {
 		return textRoom;
 	}
 
 
-
+	/**
+	 * Method to set text for textRoom
+	 * @param textRoom
+	 */
 	public void setTextRoom(JTextField textRoom) {
 		this.textRoom = textRoom;
 	}
 
 
-
+	/**
+	 * Method to get the textTags
+	 * @return textTags
+	 */
 	public JTextField getTextTags() {
 		return textTags;
 	}
 
 
-
+	/**
+	 * Method to set the textTags
+	 * @param textTags
+	 */
 	public void setTextTags(JTextField textTags) {
 		this.textTags = textTags;
 	}
 
 
-
+	/**
+	 * Method to get the textDate
+	 * @return textDate
+	 */
 	public JTextField getTextDate() {
 		return textDate;
 	}
 
 
-
+	/**
+	 * Method to set the TextDate
+	 * @param textDate
+	 */
 	public void setTextDate(JTextField textDate) {
 		this.textDate = textDate;
 	}
 
 
-
+	/**
+	 * Method to get lblApplianceType
+	 * @return lblApplianceType
+	 */
 	public JLabel getLblApplianceType() {
 		return lblApplianceType;
 	}
 
 
-
+	/**
+	 * Method to set lblAppliance
+	 * @param lblApplianceType
+	 */
 	public void setLblApplianceType(JLabel lblApplianceType) {
 		this.lblApplianceType = lblApplianceType;
 	}
-
+	
+	/**
+	 * Method that add listener to all the textfield that belong to this class
+	 */
 	public void addListener() { 
 		saveButton.addActionListener(new ActionListener() {
 			public void actionPerformed(final ActionEvent theE) {

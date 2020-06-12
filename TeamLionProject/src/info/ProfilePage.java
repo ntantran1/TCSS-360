@@ -21,7 +21,7 @@ public class ProfilePage extends JFrame implements Serializable{
 
 	private static final long serialVersionUID = 7623978707456111660L;
 	private static final JFrame frame = new JFrame();
-	private List<String> settings = Files.readAllLines(Paths.get("files/Settings.txt"));
+	private List<String> settings = Files.readAllLines(Paths.get("TeamLionProject/files/Settings.txt"));
 	private String email;
 	private String firstName;
 	JButton changeData = new JButton("Change personal info");

@@ -54,7 +54,7 @@ import javax.swing.JList;
 public class HomePage extends JFrame{
 	static int rows;
 	private int index;
-	private List<String> tableData = Files.readAllLines(Paths.get("files/Table.txt"));
+	private List<String> tableData = Files.readAllLines(Paths.get("TeamLionProject/files/Table.txt"));
 	private AboutPage about;
 	private ProfilePage profile;
 	JButton editProf = new JButton("View Profile");
