@@ -195,7 +195,7 @@ public class HomePage extends JFrame{
 					}
 				}
 			} else {
-				tempFile.createNewFile();
+//				tempFile.createNewFile();
 			}
 			((DefaultTableModel) savedTable).insertRow(savedTable.getRowCount(), new Object[] {appID, appName, appType, appRooms, appTags, appDate, appFiles});
 		}
@@ -311,6 +311,7 @@ public class HomePage extends JFrame{
 
 		//pack();
 	}
+	
 	/**
 	 * Method that add listener for the homepage components
 	 */
@@ -331,7 +332,9 @@ public class HomePage extends JFrame{
 			}
 		});
 
-		//i added
+		/**
+		 * ActionListener for combobox selector for sorting.
+		 */
 		sortButt.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(final ActionEvent theE) {
@@ -352,6 +355,7 @@ public class HomePage extends JFrame{
 					sorter0.setSortable(4, false);
 					sorter0.setSortable(6, false);
 					break;
+					
 				case "Sort By Name":
 					TableRowSorter<TableModel> sorter1 = new TableRowSorter<>(table.getModel());
 					table.setRowSorter(sorter1);
@@ -364,6 +368,7 @@ public class HomePage extends JFrame{
 					sorter1.setSortable(4, false);
 					sorter1.setSortable(6, false);
 					break;
+					
 				case "Sort By Type":
 					TableRowSorter<TableModel> sorter2 = new TableRowSorter<>(table.getModel());
 					table.setRowSorter(sorter2);
@@ -410,7 +415,9 @@ public class HomePage extends JFrame{
 			}
 		});
 
-		// get selected row data From table to textfields 
+		/**
+		 * ActionListener for the mouse listener.
+		 */
 		table.addMouseListener(new MouseAdapter(){
 
 			@Override
@@ -443,7 +450,10 @@ public class HomePage extends JFrame{
 
 			}
 		});
-
+		
+		/**
+		 * ActionListener for add file button.
+		 */
 		addFileButt.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent theE) {
@@ -492,6 +502,9 @@ public class HomePage extends JFrame{
 			}
 		});
 
+		/**
+		 * ActionListener for add link button.
+		 */
 		addLinkButt.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent theE) {
@@ -537,6 +550,9 @@ public class HomePage extends JFrame{
 			}
 		});
 
+		/**
+		 * ActionListener for open button.
+		 */
 		openButt.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent theE) {
@@ -561,7 +577,10 @@ public class HomePage extends JFrame{
 			}
 		});
 
-		// button update row
+		/**
+		 * ActionListener for update button.
+		 * This button updates the selected row.
+		 */
 		updateRowButt.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent theE) {
@@ -616,20 +635,29 @@ public class HomePage extends JFrame{
 			}
 		});
 
+		/**
+		 * ActionListener for about button in menu bar.
+		 */
 		menuAbout.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(final ActionEvent theE) {
 				about.makePage();
 			}
 		});
-
+		
+		/**
+		 * ActionListener for editProfile button.
+		 */
 		editProf.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(final ActionEvent theE) {
 				profile.makePage();
 			}
 		});
-
+		
+		/**
+		 * ActionListener for addRow button.
+		 */
 		addRowButt.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(final ActionEvent theE) {
@@ -639,7 +667,10 @@ public class HomePage extends JFrame{
 				fileList.add(new Vector<Object>());
 			}
 		});
-
+		
+		/**
+		 * ActionListener for refresh button.
+		 */
 		refreshButt.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(final ActionEvent theE) {
@@ -658,6 +689,9 @@ public class HomePage extends JFrame{
 			}
 		});
 		
+		/**
+		 * ActionListener for menu Instruction button.
+		 */
 		menuInstr.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(final ActionEvent theE) {
@@ -670,7 +704,10 @@ public class HomePage extends JFrame{
 				
 			}
 		});
-		//i added
+		
+		/**
+		 * ActionListener for delete button.
+		 */
 		delRowButt.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(final ActionEvent theE) {
@@ -681,21 +718,11 @@ public class HomePage extends JFrame{
 							JOptionPane.YES_NO_OPTION);
 					if(confirmButton == JOptionPane.YES_OPTION) {
 
-						//						int rowNum = table.getSelectedRow();
-						//						for (int i = rowNum; i <= 3; i++ ) {
-						//							model.setValueAt(table.getValueAt(i+1, 0), i+2, 0);
-						//							model.setValueAt(table.getValueAt(i, 0), i+1, 0);
-						//						}
-
 						// remove selected row from the model
 						int selected = table.convertRowIndexToModel(table.getSelectedRow());
 						model.removeRow(selected);
 						fileList.remove(selected);
-						//int modelRow = table.getSelectedRow();
-						//int i = table.convertRowIndexToModel(modelRow);
-						//table.getModel().getValueAt(modelRow, column);
-						//updating each line from the table to new temp file
-						File tempFile = new File("files/Table.txt");
+						File tempFile = new File("TeamLionProject/files/Table.txt");
 						String newInput;
 
 						try {
@@ -709,14 +736,12 @@ public class HomePage extends JFrame{
 						}
 
 						//write each rows and columns to the temp txt file
-
 						for (int row = 0; row < table.getRowCount(); row++) {
 							for (int col = 0; col < table.getColumnCount(); col++) {    	
 								newInput = model.getValueAt(row, col) + "\n";   	
 								FileWriter fr = null;
 
 								try {
-
 									fr = new FileWriter(tempFile, true);
 									fr.write(newInput);
 									fr.close();

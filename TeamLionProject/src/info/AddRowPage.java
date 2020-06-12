@@ -248,7 +248,7 @@ public class AddRowPage extends JFrame {
 						getTextTags().getText(), getTextDate().getText(), "File Holder"});
 				
 				//storing in the table file
-				File file = new File("files/Table.txt");
+				File file = new File("TeamLionProject/files/Table.txt");
 				int rowNum = model.getRowCount();
 				String newInput = index + "\n" + textName.getText() + "\n" + textType.getText()
 						+ "\n" + textRoom.getText() + "\n" + textTags.getText() + "\n"
@@ -260,7 +260,7 @@ public class AddRowPage extends JFrame {
 					fr.write(newInput);
 					fr.close();
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
+				
 					e.printStackTrace();
 				}
 				dispose();

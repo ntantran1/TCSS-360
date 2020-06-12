@@ -1,14 +1,21 @@
+/*
+ * Team Lions Project
+ * spring 2020
+ */
 package info;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.io.IOException;
-
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.UIManager;
 
+/**
+ * Instruction page
+ *
+ */
 public class InstrPage {
 	
 	public InstrPage() throws IOException {
@@ -35,7 +42,7 @@ public class InstrPage {
 		frame.getContentPane().add(panel1, BorderLayout.NORTH);
 		frame.setBackground(UIManager.getColor("SplitPaneDivider.draggingColor"));
 		frame.setVisible(true);
-		frame.setSize(600,800);
+		frame.setBounds(100, 100, 607, 369);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.setResizable(false);
 		frame.setTitle("Instruction Page");
