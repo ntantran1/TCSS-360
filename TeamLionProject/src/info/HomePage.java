@@ -332,9 +332,7 @@ public class HomePage extends JFrame{
 			}
 		});
 
-		/**
-		 * ActionListener for combobox selector for sorting.
-		 */
+		//i added
 		sortButt.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(final ActionEvent theE) {
@@ -355,7 +353,7 @@ public class HomePage extends JFrame{
 					sorter0.setSortable(4, false);
 					sorter0.setSortable(6, false);
 					break;
-					
+
 				case "Sort By Name":
 					TableRowSorter<TableModel> sorter1 = new TableRowSorter<>(table.getModel());
 					table.setRowSorter(sorter1);
@@ -368,7 +366,7 @@ public class HomePage extends JFrame{
 					sorter1.setSortable(4, false);
 					sorter1.setSortable(6, false);
 					break;
-					
+
 				case "Sort By Type":
 					TableRowSorter<TableModel> sorter2 = new TableRowSorter<>(table.getModel());
 					table.setRowSorter(sorter2);
