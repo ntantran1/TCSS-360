@@ -107,11 +107,10 @@ public class HomePage extends JFrame{
 	List<Vector<Object>> fileList = new ArrayList<Vector<Object>>();
 	private JButton addFileButt = new JButton("Add File to row");
 	private JButton addLinkButt = new JButton("Add Link to row");
-	JToggleButton deleteButt;
-	boolean deleteMode;
 	JList list;
 	private JButton openButt = new JButton("Open selected file");
 	private JTextField linkText;
+	private JButton deleteButt = new JButton("Delete Selected File");
 	
 	/**
 	 * A constructor to start the home page
@@ -119,7 +118,6 @@ public class HomePage extends JFrame{
 	 */
 	public HomePage() throws IOException{
 		index = 1;
-		deleteMode = false;
 		about = new AboutPage();
 		profile = new ProfilePage();
 		homeFrame = new JFrame();
@@ -135,25 +133,23 @@ public class HomePage extends JFrame{
 		menuHelp.add(menuAbout);
 		homeFrame.setVisible(true);
 		addListener();
-		makeTable();
+		makeTable(true);
 		rows = table.getRowCount();
 		model = (DefaultTableModel) table.getModel();
-
 	}
 	
 	/** 
 	 * Method to make the table for the homepage
 	 * @throws IOException
 	 */
-	public void makeTable() throws IOException {
+	public void makeTable(boolean first) throws IOException {
 		table.setModel(new javax.swing.table.DefaultTableModel(
 				new Object [][] {
-					//{null, null, null, null, null, null, null},
+
 				},
 				new String [] {
 						"ID", "Appliance Name", "Appliance Type", "Room", "Tags", "Date Added", "Files"
 				}
-
 				));
 
 		table.addAncestorListener(new javax.swing.event.AncestorListener() {
@@ -161,7 +157,7 @@ public class HomePage extends JFrame{
 				tableAncestorAdded(evt);
 			}
 			private void tableAncestorAdded(AncestorEvent evt) {
-
+				// TODO Auto-generated method stub
 			}
 			public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
 			}
@@ -169,9 +165,10 @@ public class HomePage extends JFrame{
 			}
 		});
 
-
 		DefaultTableModel savedTable = (DefaultTableModel) table.getModel();
-
+		//		tableModel.reset();
+		while((tableData.size() / 7) >= fileList.size()) 
+			fileList.add(new Vector<Object>());
 		for(int i = 0; i < tableData.size(); i = i + 7) {
 			String appID = tableData.get(i);
 			String appName = tableData.get(i + 1);
@@ -181,21 +178,20 @@ public class HomePage extends JFrame{
 			String appDate = tableData.get(i + 5);
 			String appFiles = tableData.get(i + 6);
 			int appIndex = Integer.parseInt(appID);
-			while(appIndex >= fileList.size())
-				fileList.add(new Vector<Object>());
-			fileList.add(appIndex, new Vector<Object>());
-			index++;
-			File tempFile = new File("files/app" + appID + "Links.txt");
-			String newInput;
-			if(tempFile.exists()) {
-				List<String> linkData = Files.readAllLines(Paths.get("files/app" + appID + "Links.txt"));
-				for(int j = 1; j <= linkData.size(); j++) {
+			
+			if(first) {
+				fileList.add(appIndex, new Vector<Object>());
+				index++;
+				File tempFile = new File("files/app" + appID + "Links.txt");
+				if(tempFile.exists()) {
+					List<String> linkData = Files.readAllLines(Paths.get("files/app" + appID + "Links.txt"));
 					for(String s: linkData) {
 						fileList.get(appIndex - 1).add(s);
 					}
 				}
-			} else {
-//				tempFile.createNewFile();
+				else {
+					tempFile.createNewFile();
+				}
 			}
 			((DefaultTableModel) savedTable).insertRow(savedTable.getRowCount(), new Object[] {appID, appName, appType, appRooms, appTags, appDate, appFiles});
 		}
@@ -308,6 +304,10 @@ public class HomePage extends JFrame{
 		linkText.setBounds(946, 481, 218, 20);
 		homeFrame.getContentPane().add(linkText);
 		linkText.setColumns(10);
+		deleteButt.setBackground(Color.RED);
+		deleteButt.setBounds(946, 660, 218, 35);
+
+		homeFrame.getContentPane().add(deleteButt);
 
 		//pack();
 	}
@@ -353,7 +353,6 @@ public class HomePage extends JFrame{
 					sorter0.setSortable(4, false);
 					sorter0.setSortable(6, false);
 					break;
-
 				case "Sort By Name":
 					TableRowSorter<TableModel> sorter1 = new TableRowSorter<>(table.getModel());
 					table.setRowSorter(sorter1);
@@ -394,6 +393,7 @@ public class HomePage extends JFrame{
 					break;
 
 				case "Sort By Date":
+					//TODO
 					TableRowSorter<TableModel> sorter4 = new TableRowSorter<>(table.getModel());
 					table.setRowSorter(sorter4);
 					List<RowSorter.SortKey> sortKeys4 = new ArrayList<>();
@@ -413,9 +413,7 @@ public class HomePage extends JFrame{
 			}
 		});
 
-		/**
-		 * ActionListener for the mouse listener.
-		 */
+		// get selected row data From table to textfields 
 		table.addMouseListener(new MouseAdapter(){
 
 			@Override
@@ -448,10 +446,7 @@ public class HomePage extends JFrame{
 
 			}
 		});
-		
-		/**
-		 * ActionListener for add file button.
-		 */
+
 		addFileButt.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent theE) {
@@ -467,6 +462,7 @@ public class HomePage extends JFrame{
 					if(rVal == JFileChooser.APPROVE_OPTION)
 					{
 						fileList.get(i).add(files.getSelectedFile().toString());
+						DefaultListModel listmodel = new DefaultListModel();
 						list.setListData(fileList.get(i));
 					}
 					File tempFile = new File("files/app" + id + "Links.txt");
@@ -500,22 +496,21 @@ public class HomePage extends JFrame{
 			}
 		});
 
-		/**
-		 * ActionListener for add link button.
-		 */
 		addLinkButt.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent theE) {
+
 				int modelRow = table.getSelectedRow();
 				int i = table.convertRowIndexToModel(modelRow);
-				int id = Integer.parseInt((String) model.getValueAt(i, 0));
 				if(linkText.getText().contains(" "))
 					JOptionPane.showMessageDialog(getComponent(0), "Invalid link");
 				else if(i >= 0) {
+					int id = Integer.parseInt((String) model.getValueAt(i, 0));
 					if(!linkText.getText().contains("http://"))
 						fileList.get(i).add("http://" + linkText.getText());	
 					else
 						fileList.get(i).add(linkText.getText());
+					DefaultListModel listmodel = new DefaultListModel();
 					list.setListData(fileList.get(i));
 					File tempFile = new File("files/app" + id + "Links.txt");
 					String newInput = "";
@@ -548,14 +543,11 @@ public class HomePage extends JFrame{
 			}
 		});
 
-		/**
-		 * ActionListener for open button.
-		 */
 		openButt.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent theE) {
 				String select = (String) list.getSelectedValue();
-				if(select.substring(0,  8).equals("https://")) {
+				if(select.substring(0,  7).equals("http://")) {
 					try {
 						Desktop.getDesktop().browse(new URI((String) select));
 					} catch (IOException | URISyntaxException e) {
@@ -574,11 +566,51 @@ public class HomePage extends JFrame{
 				}
 			}
 		});
-
-		/**
-		 * ActionListener for update button.
-		 * This button updates the selected row.
-		 */
+		
+		deleteButt.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent theE) {
+				int modelRow = table.getSelectedRow();
+				int i = table.convertRowIndexToModel(modelRow);
+				if(i >= 0) {
+					int id = Integer.parseInt((String) model.getValueAt(i, 0));
+					System.out.println(fileList.get(i).toString());
+					fileList.get(i).remove((String) list.getSelectedValue());
+					System.out.println(fileList.get(i).toString());
+					DefaultListModel listmodel = new DefaultListModel();
+					list.setListData(fileList.get(i));
+					File tempFile = new File("files/app" + id + "Links.txt");
+					String newInput = "";
+					try {
+						//Flush file
+						PrintWriter writer = new PrintWriter(tempFile);
+						writer.print("");
+						writer.close();
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					for(Object s: fileList.get(i)) {
+						newInput += (String) s;
+						newInput += "\n";
+					}
+					FileWriter fr = null;
+					try {
+						fr = new FileWriter(tempFile, true);
+						fr.write(newInput);
+						fr.close();
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+				else {
+					JOptionPane.showMessageDialog(getComponent(0), "No row selected");
+				}
+			}
+		});
+		
+		// button update row
 		updateRowButt.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent theE) {
@@ -633,29 +665,20 @@ public class HomePage extends JFrame{
 			}
 		});
 
-		/**
-		 * ActionListener for about button in menu bar.
-		 */
 		menuAbout.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(final ActionEvent theE) {
 				about.makePage();
 			}
 		});
-		
-		/**
-		 * ActionListener for editProfile button.
-		 */
+
 		editProf.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(final ActionEvent theE) {
 				profile.makePage();
 			}
 		});
-		
-		/**
-		 * ActionListener for addRow button.
-		 */
+
 		addRowButt.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(final ActionEvent theE) {
@@ -665,47 +688,26 @@ public class HomePage extends JFrame{
 				fileList.add(new Vector<Object>());
 			}
 		});
-		
-		/**
-		 * ActionListener for refresh button.
-		 */
+
 		refreshButt.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(final ActionEvent theE) {
 				try {
-					tableData = Files.readAllLines(Paths.get("TeamLionProject/files/Table.txt"));
+					tableData = Files.readAllLines(Paths.get("files/Table.txt"));
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				try {
-					makeTable();
+					makeTable(false);
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
 		});
-		
-		/**
-		 * ActionListener for menu Instruction button.
-		 */
-		menuInstr.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(final ActionEvent theE) {
-				try {
-					InstrPage instrPage = new InstrPage();
-				} catch (IOException e) {
-					
-					e.printStackTrace();
-				}
-				
-			}
-		});
-		
-		/**
-		 * ActionListener for delete button.
-		 */
+
+		//i added
 		delRowButt.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(final ActionEvent theE) {
@@ -716,11 +718,21 @@ public class HomePage extends JFrame{
 							JOptionPane.YES_NO_OPTION);
 					if(confirmButton == JOptionPane.YES_OPTION) {
 
+						//						int rowNum = table.getSelectedRow();
+						//						for (int i = rowNum; i <= 3; i++ ) {
+						//							model.setValueAt(table.getValueAt(i+1, 0), i+2, 0);
+						//							model.setValueAt(table.getValueAt(i, 0), i+1, 0);
+						//						}
+
 						// remove selected row from the model
 						int selected = table.convertRowIndexToModel(table.getSelectedRow());
 						model.removeRow(selected);
 						fileList.remove(selected);
-						File tempFile = new File("TeamLionProject/files/Table.txt");
+						//int modelRow = table.getSelectedRow();
+						//int i = table.convertRowIndexToModel(modelRow);
+						//table.getModel().getValueAt(modelRow, column);
+						//updating each line from the table to new temp file
+						File tempFile = new File("files/Table.txt");
 						String newInput;
 
 						try {
@@ -734,12 +746,14 @@ public class HomePage extends JFrame{
 						}
 
 						//write each rows and columns to the temp txt file
+
 						for (int row = 0; row < table.getRowCount(); row++) {
 							for (int col = 0; col < table.getColumnCount(); col++) {    	
 								newInput = model.getValueAt(row, col) + "\n";   	
 								FileWriter fr = null;
 
 								try {
+
 									fr = new FileWriter(tempFile, true);
 									fr.write(newInput);
 									fr.close();
