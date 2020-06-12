@@ -161,7 +161,7 @@ public class HomePage extends JFrame{
 				tableAncestorAdded(evt);
 			}
 			private void tableAncestorAdded(AncestorEvent evt) {
-				// TODO Auto-generated method stub
+
 			}
 			public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
 			}
@@ -171,7 +171,7 @@ public class HomePage extends JFrame{
 
 
 		DefaultTableModel savedTable = (DefaultTableModel) table.getModel();
-		//		tableModel.reset();
+
 		for(int i = 0; i < tableData.size(); i = i + 7) {
 			String appID = tableData.get(i);
 			String appName = tableData.get(i + 1);
@@ -194,8 +194,7 @@ public class HomePage extends JFrame{
 						fileList.get(appIndex - 1).add(s);
 					}
 				}
-			}
-			else {
+			} else {
 				tempFile.createNewFile();
 			}
 			((DefaultTableModel) savedTable).insertRow(savedTable.getRowCount(), new Object[] {appID, appName, appType, appRooms, appTags, appDate, appFiles});
