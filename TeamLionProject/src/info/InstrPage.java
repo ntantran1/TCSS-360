@@ -23,7 +23,8 @@ public class InstrPage {
 				+ "<h4>--It will take you to the dashboard page if the user and pass are correct.<br>"
 				+ "<h4>--In the dashboard page, you can create/delete/update/read the applicance information.</h4> <br>"
 				+ "<h4>--You can also wriete notes, tags, dates or anyother informations regarding the homeappliances.</h4> <br>"
-				+ "<h4>--You can also upload an pdf file, image file to keep informations about the appliances. </h4>-<br>");
+				+ "<h4>--You can also upload an pdf file, image file to keep informations about the appliances. </h4>-<br>"
+				+ "--Team Lions");
 		panel1.add(headerLabel);
 		JPanel panel2 = new JPanel();
 		panel2.setSize(600, 600);
