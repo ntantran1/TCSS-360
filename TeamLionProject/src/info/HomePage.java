@@ -128,7 +128,7 @@ public class HomePage extends JFrame{
 
 	}
 
-	public void makeTable() {
+	public void makeTable() throws IOException {
 		table.setModel(new javax.swing.table.DefaultTableModel(
 				new Object [][] {
 
@@ -164,8 +164,24 @@ public class HomePage extends JFrame{
 			String appTags = tableData.get(i + 4);
 			String appDate = tableData.get(i + 5);
 			String appFiles = tableData.get(i + 6);
-			fileList.add(new Vector<Object>());
+			int appIndex = Integer.parseInt(appID);
+			while(appIndex >= fileList.size())
+				fileList.add(new Vector<Object>());
+			fileList.add(appIndex, new Vector<Object>());
 			index++;
+			File tempFile = new File("files/app" + appID + "Links.txt");
+			String newInput;
+			if(tempFile.exists()) {
+				List<String> linkData = Files.readAllLines(Paths.get("files/app" + appID + "Links.txt"));
+				for(int j = 1; j <= linkData.size(); j++) {
+					for(String s: linkData) {
+						fileList.get(appIndex - 1).add(s);
+					}
+				}
+			}
+			else {
+				tempFile.createNewFile();
+			}
 			((DefaultTableModel) savedTable).insertRow(savedTable.getRowCount(), new Object[] {appID, appName, appType, appRooms, appTags, appDate, appFiles});
 		}
 	}
@@ -266,9 +282,9 @@ public class HomePage extends JFrame{
 		homeFrame.getContentPane().add(deleteButt);
 		openButt.setBackground(new Color(173, 255, 47));
 		openButt.setBounds(946, 555, 218, 35);
-		
+
 		homeFrame.getContentPane().add(openButt);
-		
+
 		linkText = new JTextField();
 		linkText.setText("(Type link here)");
 		linkText.setBounds(946, 481, 218, 20);
@@ -418,13 +434,37 @@ public class HomePage extends JFrame{
 				files.setCurrentDirectory(workingDirectory);
 				int modelRow = table.getSelectedRow();
 				int i = table.convertRowIndexToModel(modelRow);
-
+				int id = Integer.parseInt((String) model.getValueAt(i, 0));
 				if(i >= 0) {
 					int rVal = files.showOpenDialog(null);
 					if(rVal == JFileChooser.APPROVE_OPTION)
 					{
-						fileList.get(i).add(files.getSelectedFile());
+						fileList.get(i).add(files.getSelectedFile().toString());
 						list.setListData(fileList.get(i));
+					}
+					File tempFile = new File("files/app" + id + "Links.txt");
+					String newInput = "";
+					try {
+						//Flush file
+						PrintWriter writer = new PrintWriter(tempFile);
+						writer.print("");
+						writer.close();
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					for(Object s: fileList.get(i)) {
+						newInput += (String) s;
+						newInput += "\n";
+					}
+					FileWriter fr = null;
+					try {
+						fr = new FileWriter(tempFile, true);
+						fr.write(newInput);
+						fr.close();
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
 					}
 				}
 				else {
@@ -438,6 +478,7 @@ public class HomePage extends JFrame{
 			public void actionPerformed(ActionEvent theE) {
 				int modelRow = table.getSelectedRow();
 				int i = table.convertRowIndexToModel(modelRow);
+				int id = Integer.parseInt((String) model.getValueAt(i, 0));
 				if(linkText.getText().contains(" "))
 					JOptionPane.showMessageDialog(getComponent(0), "Invalid link");
 				else if(i >= 0) {
@@ -446,18 +487,42 @@ public class HomePage extends JFrame{
 					else
 						fileList.get(i).add(linkText.getText());
 					list.setListData(fileList.get(i));
+					File tempFile = new File("files/app" + id + "Links.txt");
+					String newInput = "";
+					try {
+						//Flush file
+						PrintWriter writer = new PrintWriter(tempFile);
+						writer.print("");
+						writer.close();
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					for(Object s: fileList.get(i)) {
+						newInput += (String) s;
+						newInput += "\n";
+					}
+					FileWriter fr = null;
+					try {
+						fr = new FileWriter(tempFile, true);
+						fr.write(newInput);
+						fr.close();
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				}
 				else {
 					JOptionPane.showMessageDialog(getComponent(0), "No row selected");
 				}
 			}
 		});
-		
+
 		openButt.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent theE) {
-				Object select = list.getSelectedValue();
-				if(select instanceof String) {
+				String select = (String) list.getSelectedValue();
+				if(select.substring(0,  8).equals("https://")) {
 					try {
 						Desktop.getDesktop().browse(new URI((String) select));
 					} catch (IOException | URISyntaxException e) {
@@ -468,7 +533,7 @@ public class HomePage extends JFrame{
 				else {
 					//File htmlFile = new File(select);
 					try {
-						Desktop.getDesktop().open((File)select);
+						Desktop.getDesktop().open(new File(select));
 					} catch (IOException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -476,7 +541,7 @@ public class HomePage extends JFrame{
 				}
 			}
 		});
-		
+
 		// button update row
 		updateRowButt.addActionListener(new ActionListener(){
 			@Override
@@ -565,7 +630,12 @@ public class HomePage extends JFrame{
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				makeTable();
+				try {
+					makeTable();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		});
 
